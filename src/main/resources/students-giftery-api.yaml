@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: "Students Giftery API"
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8080"
+tags:
+  - name: Brands
+paths:
+  /brands:
+    get:
+      tags:
+        - Brands
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string

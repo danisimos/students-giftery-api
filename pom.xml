@@ -118,6 +118,8 @@
                             <inputSpec>${project.basedir}/src/main/resources/students-giftery-api.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <apiPackage>ru.itis.api</apiPackage>
+                            <artifactId>stst</artifactId>
+                            <artifactVersion>0.1</artifactVersion>
                             <generateSupportingFiles>true</generateSupportingFiles>
                             <configOptions>
                                 <oas3>true</oas3>
