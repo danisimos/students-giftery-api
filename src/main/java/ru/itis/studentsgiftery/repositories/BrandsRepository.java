@@ -1,4 +1,7 @@
 package ru.itis.studentsgiftery.repositories;
 
-public interface BrandsRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.itis.studentsgiftery.models.Brand;
+
+public interface BrandsRepository extends JpaRepository<Brand, Long> {
 }
