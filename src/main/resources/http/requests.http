@@ -1,0 +1,21 @@
+GET http://localhost:8080/swagger-ui/index.html
+
+###
+
+POST http://localhost:8080/api/students-giftery/login/
+Content-Type: application/json
+
+{
+  "email": "daniil.korotaev@gmail.com",
+  "password": "12345"
+}
+
+###
+
+GET http://localhost:8080/api/students-giftery/testingSecurityAuthenticated/
+Authorization: Bearer testToken
+
+###
+
+GET http://localhost:8080/api/students-giftery/testingSecurityAuthority/
+Authorization: Bearer testTokenj
