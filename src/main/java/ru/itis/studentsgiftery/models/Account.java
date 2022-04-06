@@ -1,36 +1,45 @@
 package ru.itis.studentsgiftery.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "users")
-public class Account extends AbstractEntity {
-
+public class Account {
     public enum State {
-        NOT_CONFIRMED, CONFIRMED
-    }
+        NOT_CONFIRMED, CONFIRMED, DELETED, BANNED
+    };
+
+    public enum Role {
+        USER, ADMIN
+    };
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "first_name")
-    String firstName;
+    private String firstName;
 
     @Column(name = "last_name")
-    String lastName;
+    private String lastName;
 
-    String email;
+    private String email;
 
-    //TODO: security...
-
-    @OneToMany(mappedBy = "userAccount", fetch = FetchType.EAGER)
+    @OneToMany()
     private List<Certificate> certificateList;
 
     @Enumerated(value = EnumType.STRING)
     private State state;
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
 }

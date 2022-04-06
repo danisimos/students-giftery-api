@@ -1,18 +1,26 @@
 package ru.itis.studentsgiftery.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "brands")
-public class Brand extends AbstractEntity {
+public class Brand {
+    public enum State {
+        ACTIVE, DELETED
+    };
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "brand_name")
     private String brandName;
@@ -20,9 +28,11 @@ public class Brand extends AbstractEntity {
     private String description;
 
     @Column(name = "avatar_id")
-    private Integer avatarId;
+    private String avatarLink;
 
-    @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "brand")
     private List<Certificate> certificateList;
 
+    @Enumerated(value = EnumType.STRING)
+    private State state;
 }
