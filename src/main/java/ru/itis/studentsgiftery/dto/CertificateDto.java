@@ -1,7 +1,16 @@
 package ru.itis.studentsgiftery.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CertificateDto {
-    private String value;
-    private AccountDto user;
-    public BrandDto brand;
+    private Integer value;
+    private Long userId;
+    public Long branId;
 }

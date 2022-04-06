@@ -1,4 +1,15 @@
 package ru.itis.studentsgiftery.dto.mapper;
 
-public class BrandMapper {
+import org.mapstruct.Mapper;
+import ru.itis.studentsgiftery.dto.AccountDto;
+import ru.itis.studentsgiftery.dto.BrandDto;
+import ru.itis.studentsgiftery.models.Account;
+import ru.itis.studentsgiftery.models.Brand;
+
+@Mapper(componentModel = "spring")
+public interface BrandMapper {
+
+    Brand toBrand(BrandDto brandDto);
+
+    BrandDto toBrandDto(Brand brand);
 }
