@@ -15,6 +15,7 @@ import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.security.details.AccountUserDetailsService;
 import ru.itis.studentsgiftery.security.filters.TokenAuthenticationFilter;
 import ru.itis.studentsgiftery.security.filters.TokenAuthorizationFilter;
+import ru.itis.studentsgiftery.security.jwt.JwtProvider;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final ObjectMapper objectMapper;
     private final AccountUserDetailsService accountUserDetailsService;
     private final AccountsRepository accountsRepository;
+    private final JwtProvider jwtProvider;
 
     @Bean
     @Override
@@ -38,10 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         TokenAuthenticationFilter tokenAuthenticationFilter =
-                new TokenAuthenticationFilter(authenticationManagerBean(), objectMapper, accountsRepository);
+                new TokenAuthenticationFilter(authenticationManagerBean(), objectMapper, accountsRepository, jwtProvider);
         tokenAuthenticationFilter.setFilterProcessesUrl("/api/students-giftery/login/");
 
-        TokenAuthorizationFilter tokenAuthorizationFilter = new TokenAuthorizationFilter(accountsRepository, objectMapper);
+        TokenAuthorizationFilter tokenAuthorizationFilter = new TokenAuthorizationFilter(objectMapper, jwtProvider);
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -34,7 +34,6 @@ public class Account {
 
     private String email;
     private String password;
-    private String token;
 
     @OneToMany()
     private List<Certificate> certificateList;
