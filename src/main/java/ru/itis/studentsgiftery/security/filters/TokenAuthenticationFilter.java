@@ -11,23 +11,25 @@ import ru.itis.studentsgiftery.dto.SignInForm;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.security.details.AccountUserDetails;
+import ru.itis.studentsgiftery.security.jwt.JwtProvider;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.IOException;
 import java.util.Collections;
 
 public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final ObjectMapper objectMapper;
     private final AccountsRepository accountsRepository;
+    private final JwtProvider jwtProvider;
 
-    public TokenAuthenticationFilter(AuthenticationManager authenticationManager, ObjectMapper objectMapper, AccountsRepository accountsRepository) {
+    public TokenAuthenticationFilter(AuthenticationManager authenticationManager, ObjectMapper objectMapper, AccountsRepository accountsRepository, JwtProvider jwtProvider) {
         super(authenticationManager);
         this.objectMapper = objectMapper;
         this.accountsRepository = accountsRepository;
+        this.jwtProvider = jwtProvider;
     }
 
     @Override
@@ -48,9 +50,7 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
                                             FilterChain chain, Authentication authResult) throws IOException, ServletException {
         AccountUserDetails accountUserDetails = (AccountUserDetails) authResult.getPrincipal();
         Account account = accountUserDetails.getAccount();
-        String token = "testToken";
-        account.setToken(token);
-        accountsRepository.save(account);
+        String token = jwtProvider.createToken(accountUserDetails);
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         objectMapper.writeValue(response.getWriter(), Collections.singletonMap("token", token));
