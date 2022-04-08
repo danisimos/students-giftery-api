@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class BrandDto {
+    private Long id;
     private String brandName;
     private String description;
     private Integer avatarId;
 
-    public static List<CertificateDto> certificates;
+    public static List<Long> certificateId;
 }

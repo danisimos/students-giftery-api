@@ -1,13 +1,21 @@
 package ru.itis.studentsgiftery.dto.mapper;
 
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import ru.itis.studentsgiftery.dto.CertificateDto;
 import ru.itis.studentsgiftery.models.Certificate;
 
 @Mapper(componentModel = "spring")
-public interface CertificateMapper {
+public abstract class CertificateMapper {
 
-    Certificate toCertificate(CertificateDto certificateDto);
+    public abstract Certificate toCertificate(CertificateDto certificateDto);
 
-    CertificateDto toCertificateDto(Certificate certificate);
+    public abstract CertificateDto toCertificateDto(Certificate certificate);
+
+    @AfterMapping
+    protected void setCertificateUserToCertificateDtoUser(Certificate certificate, @MappingTarget CertificateDto certificateDto){
+        certificateDto.setUserId(certificate.getUserAccount().getId());
+    }
+
 }
