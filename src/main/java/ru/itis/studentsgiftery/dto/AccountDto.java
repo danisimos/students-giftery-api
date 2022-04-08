@@ -16,5 +16,5 @@ public class AccountDto {
     private String lastName;
     private String email;
 
-    public static List<Long> certificateId;
+    private List<Long> ListCertificateId;
 }

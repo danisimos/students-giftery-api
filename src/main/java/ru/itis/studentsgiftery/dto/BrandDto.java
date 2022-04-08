@@ -16,5 +16,5 @@ public class BrandDto {
     private String description;
     private Integer avatarId;
 
-    public static List<Long> certificateId;
+    private List<Long> listCertificateId;
 }
