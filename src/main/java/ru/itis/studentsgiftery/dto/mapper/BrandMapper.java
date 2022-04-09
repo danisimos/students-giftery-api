@@ -4,6 +4,7 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import ru.itis.studentsgiftery.dto.BrandDto;
+import ru.itis.studentsgiftery.dto.BrandForm;
 import ru.itis.studentsgiftery.models.Brand;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public abstract class BrandMapper {
 
     public abstract BrandDto toBrandDto(Brand brand);
 
-    public abstract List<BrandDto> brandDtoList(List<Brand> brands);
+    public abstract List<BrandDto> toBrandDtoList(List<Brand> brands);
 
     @AfterMapping
     protected void set(Brand brand, @MappingTarget BrandDto brandDto){

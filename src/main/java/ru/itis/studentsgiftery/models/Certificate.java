@@ -25,7 +25,7 @@ public class Certificate {
 
     @ManyToOne()
     @JoinColumn(name = "brand_id")
-    private Brand brand;
+    private Long brandId;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
