@@ -1,15 +1,26 @@
 package ru.itis.studentsgiftery.dto.mapper;
 
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
-import ru.itis.studentsgiftery.dto.AccountDto;
+import org.mapstruct.MappingTarget;
 import ru.itis.studentsgiftery.dto.BrandDto;
-import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.models.Brand;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Mapper(componentModel = "spring")
-public interface BrandMapper {
+public abstract class BrandMapper {
 
-    Brand toBrand(BrandDto brandDto);
+    public abstract Brand toBrand(BrandDto brandDto);
 
-    BrandDto toBrandDto(Brand brand);
+    public abstract BrandDto toBrandDto(Brand brand);
+
+    public abstract List<BrandDto> brandDtoList(List<Brand> brands);
+
+    @AfterMapping
+    protected void set(Brand brand, @MappingTarget BrandDto brandDto){
+        brandDto.setListCertificateId(brand.getCertificateList().stream().map(s-> s.getId()).collect(Collectors.toList()));
+
+    }
 }
