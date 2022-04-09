@@ -14,7 +14,7 @@ public class BrandDto {
     private Long id;
     private String brandName;
     private String description;
-    private Integer avatarId;
+    private String avatarLink;
 
     private List<Long> listCertificateId;
 }

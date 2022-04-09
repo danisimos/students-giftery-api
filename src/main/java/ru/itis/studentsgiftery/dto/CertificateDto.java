@@ -12,5 +12,5 @@ public class CertificateDto {
     private Long id;
     private Integer value;
     private Long userId;
-    public Long branId;
+    public Long brandId;
 }
