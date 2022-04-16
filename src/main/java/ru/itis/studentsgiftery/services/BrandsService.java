@@ -15,4 +15,5 @@ public interface BrandsService {
     BrandDto updateBrand(Long id, BrandForm newData);
 
     void deleteBrand(Long id);
+
 }

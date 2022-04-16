@@ -23,23 +23,6 @@ public class AccountsServiceImpl implements AccountsService {
     private final AccountMapper accountMapper;
 
     @Override
-    public AccountDto saveAccount(SignUpForm signUpForm) {
-        Account newAccount = Account.builder()
-                .firstName(signUpForm.getFirstName())
-                .lastName(signUpForm.getLastName())
-                .email(signUpForm.getEmail())
-                .password(signUpForm.getPassword())
-                .state(Account.State.NOT_CONFIRMED)
-                .role(Account.Role.USER)
-                .certificateList(new ArrayList<Certificate>())
-                .build();
-
-        accountsRepository.save(newAccount);
-
-        return accountMapper.toAccountDto(newAccount);
-    }
-
-    @Override
     public AccountDto getAccount(Long id) {
         Account account = accountsRepository.findById(id).orElseThrow(AccountNotFoundException::new);
         return accountMapper.toAccountDto(account);
