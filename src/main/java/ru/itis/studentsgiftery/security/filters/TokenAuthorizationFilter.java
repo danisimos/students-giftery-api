@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 public class TokenAuthorizationFilter extends OncePerRequestFilter {
-    public static final String API_STUDENTS_GIFTERY_LOGIN = "/api/students-giftery/login";
+    public static final String API_STUDENTS_GIFTERY_LOGIN = "/api/students-giftery/signIn/";
     private final ObjectMapper objectMapper;
     private final JwtProvider jwtProvider;
 

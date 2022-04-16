@@ -21,10 +21,4 @@ public abstract class AccountMapper {
     public abstract List<Account> toAccountList(List<AccountDto> accountsDto);
 
     public abstract List<AccountDto> toAccountDtoList(List<Account> accounts);
-
-    @AfterMapping
-    protected void set(Account account, @MappingTarget AccountDto accountDto){
-        accountDto.setListCertificateId(account.getCertificateList().stream().map(s-> s.getId()).collect(Collectors.toList()));
-
-    }
 }

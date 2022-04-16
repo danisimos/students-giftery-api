@@ -4,7 +4,6 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import ru.itis.studentsgiftery.dto.BrandDto;
-import ru.itis.studentsgiftery.dto.BrandForm;
 import ru.itis.studentsgiftery.models.Brand;
 
 import java.util.List;

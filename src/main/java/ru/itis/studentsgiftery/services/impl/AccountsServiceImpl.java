@@ -3,16 +3,12 @@ package ru.itis.studentsgiftery.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.itis.studentsgiftery.dto.AccountDto;
-import ru.itis.studentsgiftery.dto.CertificateDto;
-import ru.itis.studentsgiftery.dto.SignUpForm;
 import ru.itis.studentsgiftery.dto.mapper.AccountMapper;
 import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
-import ru.itis.studentsgiftery.models.Certificate;
 import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.services.AccountsService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,5 +35,15 @@ public class AccountsServiceImpl implements AccountsService {
         account.setState(Account.State.DELETED);
 
         accountsRepository.save(account);
+    }
+
+    @Override
+    public List<AccountDto> getByOrganization(Long organizationId) {
+        return accountMapper.toAccountDtoList(accountsRepository.findAllByOrganizationId(organizationId));
+    }
+
+    @Override
+    public List<AccountDto> getAccounts() {
+        return accountMapper.toAccountDtoList(accountsRepository.findAll());
     }
 }

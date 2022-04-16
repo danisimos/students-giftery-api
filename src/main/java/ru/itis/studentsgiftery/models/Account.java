@@ -18,13 +18,9 @@ public class Account {
         NOT_CONFIRMED, CONFIRMED, DELETED, BANNED
     }
 
-    ;
-
     public enum Role {
-        USER, ADMIN
+        USER, ORGANIZATION
     }
-
-    ;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,18 +32,27 @@ public class Account {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
 
     @Column(name = "confirm_code")
     private String confirmCode;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "account")
     private List<Certificate> certificateList;
 
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
+    private Organization organization;
+
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "state")
     private State state;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 }

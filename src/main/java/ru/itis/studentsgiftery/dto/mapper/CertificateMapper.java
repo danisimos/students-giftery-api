@@ -19,7 +19,7 @@ public abstract class CertificateMapper {
 
     @AfterMapping
     protected void setCertificateUserToCertificateDtoUser(Certificate certificate, @MappingTarget CertificateDto certificateDto){
-        certificateDto.setUserId(certificate.getUserAccount().getId());
+        certificateDto.setUserId(certificate.getAccount().getId());
     }
 
 }

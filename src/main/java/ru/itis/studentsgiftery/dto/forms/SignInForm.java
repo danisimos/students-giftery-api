@@ -1,4 +1,4 @@
-package ru.itis.studentsgiftery.dto;
+package ru.itis.studentsgiftery.dto.forms;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignUpForm {
-    private String firstName;
-    private String lastName;
+public class SignInForm {
     private String email;
     private String password;
 }

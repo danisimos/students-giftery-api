@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         TokenAuthenticationFilter tokenAuthenticationFilter =
                 new TokenAuthenticationFilter(authenticationManagerBean(), objectMapper, accountsRepository, jwtProvider);
-        tokenAuthenticationFilter.setFilterProcessesUrl("/api/students-giftery/login/");
+        tokenAuthenticationFilter.setFilterProcessesUrl("/api/students-giftery/signIn/");
 
         TokenAuthorizationFilter tokenAuthorizationFilter = new TokenAuthorizationFilter(objectMapper, jwtProvider);
 
@@ -51,8 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(tokenAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .antMatchers("/api/students-giftery/login/").permitAll()
-                .antMatchers("/api/students-giftery/testingSecurityAuthenticated/").authenticated()
-                .antMatchers("/api/students-giftery/testingSecurityAuthority/").hasAuthority("USER");
+                .antMatchers("/api/students-giftery/signUp/").permitAll()
+                .antMatchers("/api/students-giftery/signIn/").permitAll()
+                .antMatchers("/api/students-giftery/**").authenticated();
     }
 }
