@@ -15,4 +15,5 @@ public interface CertificatesService {
     CertificateDto updateCertificate(Long id, CertificateForm newData);
 
     void deleteCertificate(Long id);
+
 }

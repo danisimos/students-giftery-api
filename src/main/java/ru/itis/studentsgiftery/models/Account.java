@@ -16,11 +16,15 @@ import java.util.List;
 public class Account {
     public enum State {
         NOT_CONFIRMED, CONFIRMED, DELETED, BANNED
-    };
+    }
+
+    ;
 
     public enum Role {
         USER, ADMIN
-    };
+    }
+
+    ;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +38,9 @@ public class Account {
 
     private String email;
     private String password;
+
+    @Column(name = "confirm_code")
+    private String confirmCode;
 
     @OneToMany()
     private List<Certificate> certificateList;
