@@ -3,7 +3,7 @@ package ru.itis.studentsgiftery.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.itis.studentsgiftery.dto.CertificateDto;
-import ru.itis.studentsgiftery.dto.CertificateForm;
+import ru.itis.studentsgiftery.dto.forms.CertificateForm;
 import ru.itis.studentsgiftery.dto.mapper.CertificateMapper;
 import ru.itis.studentsgiftery.exceptions.CertificateNotFoundException;
 import ru.itis.studentsgiftery.models.Certificate;
@@ -23,7 +23,6 @@ public class CertificatesServiceImpl implements CertificatesService {
     public CertificateDto saveCertificate(CertificateForm certificateForm) {
         Certificate newCertificate = Certificate.builder()
                 .value(certificateForm.getValue())
-                .brandId(certificateForm.getBrandId())
                 .state(Certificate.State.ACTIVE)
                 .build();
 
@@ -47,7 +46,6 @@ public class CertificatesServiceImpl implements CertificatesService {
     public CertificateDto updateCertificate(Long id, CertificateForm newData) {
         Certificate certificate = certificatesRepository.findById(id).orElseThrow(CertificateNotFoundException::new);
         certificate.setValue(newData.getValue());
-        certificate.setBrandId(newData.getBrandId());
 
         certificatesRepository.save(certificate);
 

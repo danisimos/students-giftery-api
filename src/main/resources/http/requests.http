@@ -2,7 +2,19 @@ GET http://localhost:8080/swagger-ui/index.html
 
 ###
 
-POST http://localhost:8080/api/students-giftery/login/
+POST http://localhost:8080/api/students-giftery/signUp/
+Content-Type: application/json
+
+{
+  "firstName": "Daniil",
+  "lastName": "Korotaev",
+  "email": "daniil.korotaev@gmail.com",
+  "password": "12345"
+}
+
+###
+
+POST http://localhost:8080/api/students-giftery/signIn/
 Content-Type: application/json
 
 {
@@ -12,10 +24,21 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/api/students-giftery/testingSecurityAuthenticated/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjQ5MzU4MTE5fQ.ios0UbKIWzphC9RAbRVjGRJ6_kITyT_Hs1Tgx3sq7QU
+POST http://localhost:8080/api/students-giftery/createOrganization/
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTMwOTMwfQ.72XI2yxbJ4I0j3n9I6-x-iERua0BtlrczRY71KUO4jY
+
+{
+  "name": "Skuratov Сoffee",
+  "description": "Coffee houses in 7 cities of Russia."
+}
 
 ###
 
-GET http://localhost:8080/api/students-giftery/testingSecurityAuthority/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjQ5MzU4MTE5fQ.ios0UbKIWzphC9RAbRVjGRJ6_kITyT_Hs1Tgx3sq7QU
+GET http://localhost:8080/api/students-giftery/organizations/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTMwOTMwfQ.72XI2yxbJ4I0j3n9I6-x-iERua0BtlrczRY71KUO4jY
+
+###
+
+GET http://localhost:8080/api/students-giftery/accounts/getByOrganization?organizationId=2
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTMwOTMwfQ.72XI2yxbJ4I0j3n9I6-x-iERua0BtlrczRY71KUO4jY

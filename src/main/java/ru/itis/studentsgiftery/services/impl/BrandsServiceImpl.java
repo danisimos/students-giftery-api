@@ -3,7 +3,7 @@ package ru.itis.studentsgiftery.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.itis.studentsgiftery.dto.BrandDto;
-import ru.itis.studentsgiftery.dto.BrandForm;
+import ru.itis.studentsgiftery.dto.forms.BrandForm;
 import ru.itis.studentsgiftery.dto.mapper.BrandMapper;
 import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
 import ru.itis.studentsgiftery.models.Brand;

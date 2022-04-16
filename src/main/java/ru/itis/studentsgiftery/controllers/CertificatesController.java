@@ -7,7 +7,7 @@ import ru.itis.studentsgiftery.services.CertificatesService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/certificates")
+@RequestMapping("/api/students-giftery/")
 public class CertificatesController {
     private final CertificatesService certificatesService;
 }

@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Certificate {
     public enum State {
         ACTIVE, DELETED
-    };
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,11 @@ public class Certificate {
 
     @ManyToOne()
     @JoinColumn(name = "brand_id")
-    private Long brandId;
+    private Brand brand;
 
     @ManyToOne()
-    @JoinColumn(name = "user_id")
-    private Account userAccount;
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @Enumerated(value = EnumType.STRING)
     private State state;

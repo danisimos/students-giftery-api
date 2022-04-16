@@ -33,11 +33,11 @@ public class JwtProvider {
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secret)).build().verify(token);
         String email = decodedJWT.getSubject();
 
-        Account account = accountsRepository.findByEmail(email).orElseThrow(AccountNotFoundException::new);
+        Account account = accountsRepository.findAccountByEmail(email).orElseThrow(AccountNotFoundException::new);
         AccountUserDetails accountUserDetails = new AccountUserDetails(account);
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(token, null, accountUserDetails.getAuthorities());
+                new UsernamePasswordAuthenticationToken(token, accountUserDetails, accountUserDetails.getAuthorities());
 
         return usernamePasswordAuthenticationToken;
     }

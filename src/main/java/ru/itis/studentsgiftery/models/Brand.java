@@ -25,6 +25,7 @@ public class Brand {
     @Column(name = "brand_name")
     private String brandName;
 
+    @Column(name = "description")
     private String description;
 
     @Column(name = "avatar_id")
@@ -32,6 +33,10 @@ public class Brand {
 
     @OneToMany(mappedBy = "brand")
     private List<Certificate> certificateList;
+
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
+    private Organization organization;
 
     @Enumerated(value = EnumType.STRING)
     private State state;

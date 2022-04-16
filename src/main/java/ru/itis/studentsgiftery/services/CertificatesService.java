@@ -1,7 +1,7 @@
 package ru.itis.studentsgiftery.services;
 
 import ru.itis.studentsgiftery.dto.CertificateDto;
-import ru.itis.studentsgiftery.dto.CertificateForm;
+import ru.itis.studentsgiftery.dto.forms.CertificateForm;
 
 import java.util.List;
 

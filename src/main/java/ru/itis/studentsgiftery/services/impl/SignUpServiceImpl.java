@@ -1,13 +1,13 @@
 package ru.itis.studentsgiftery.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.itis.studentsgiftery.dto.AccountDto;
-import ru.itis.studentsgiftery.dto.SignUpForm;
+import ru.itis.studentsgiftery.dto.forms.SignUpForm;
 import ru.itis.studentsgiftery.dto.mapper.AccountMapper;
 import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
-import ru.itis.studentsgiftery.models.Certificate;
 import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.services.SignUpService;
 import ru.itis.studentsgiftery.util.EmailUtil;
@@ -20,6 +20,7 @@ public class SignUpServiceImpl implements SignUpService {
 
     private final AccountsRepository accountsRepository;
     private final AccountMapper accountMapper;
+    private final PasswordEncoder passwordEncoder;
     private final EmailUtil emailUtil;
 
     @Override
@@ -28,16 +29,14 @@ public class SignUpServiceImpl implements SignUpService {
                 .firstName(signUpForm.getFirstName())
                 .lastName(signUpForm.getLastName())
                 .email(signUpForm.getEmail())
-                .password(signUpForm.getPassword())
+                .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .confirmCode(UUID.randomUUID().toString())
                 .state(Account.State.NOT_CONFIRMED)
                 .role(Account.Role.USER)
-                .certificateList(new ArrayList<Certificate>())
                 .build();
 
-        accountsRepository.findAccountByEmail(newAccount.getEmail()).orElseThrow(AccountNotFoundException::new);
-
         accountsRepository.save(newAccount);
+
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("first_name", newAccount.getFirstName());
         templateData.put("last_name", newAccount.getLastName());

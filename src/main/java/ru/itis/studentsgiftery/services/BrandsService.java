@@ -1,7 +1,7 @@
 package ru.itis.studentsgiftery.services;
 
 import ru.itis.studentsgiftery.dto.BrandDto;
-import ru.itis.studentsgiftery.dto.BrandForm;
+import ru.itis.studentsgiftery.dto.forms.BrandForm;
 
 import java.util.List;
 

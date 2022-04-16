@@ -1,4 +1,4 @@
-package ru.itis.studentsgiftery.dto;
+package ru.itis.studentsgiftery.dto.forms;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

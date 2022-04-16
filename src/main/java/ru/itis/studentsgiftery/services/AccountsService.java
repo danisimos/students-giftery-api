@@ -1,7 +1,6 @@
 package ru.itis.studentsgiftery.services;
 
 import ru.itis.studentsgiftery.dto.AccountDto;
-import ru.itis.studentsgiftery.dto.SignUpForm;
 
 import java.util.List;
 
@@ -12,4 +11,7 @@ public interface AccountsService {
 
     void deleteAccount(Long id);
 
+    List<AccountDto> getByOrganization(Long organizationId);
+
+    List<AccountDto> getAccounts();
 }

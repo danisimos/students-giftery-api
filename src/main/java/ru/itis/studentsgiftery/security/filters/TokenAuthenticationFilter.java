@@ -7,7 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.itis.studentsgiftery.dto.SignInForm;
+import ru.itis.studentsgiftery.dto.forms.SignInForm;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.security.details.AccountUserDetails;
