@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class AccountMapper {
-
     public abstract Account toAccount(AccountDto accountDto);
 
     public abstract AccountDto toAccountDto(Account account);
