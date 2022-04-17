@@ -44,15 +44,16 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<Certificate> certificateList;
 
+    @OneToMany(mappedBy = "organization")
+    private List<OrganizationJoinRequest> joinRequests;
+
     @ManyToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "state")
     private State state;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "role")
     private Role role;
 }

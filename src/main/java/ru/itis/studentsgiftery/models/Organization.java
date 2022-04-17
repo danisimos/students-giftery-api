@@ -29,4 +29,7 @@ public class Organization {
 
     @OneToMany(mappedBy = "organization")
     private List<Account> accounts;
+
+    @OneToMany(mappedBy = "organization")
+    private List<OrganizationJoinRequest> joinRequests;
 }

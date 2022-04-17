@@ -12,6 +12,18 @@ Content-Type: application/json
   "password": "12345"
 }
 
+### test account
+
+POST http://localhost:8080/api/students-giftery/signUp/
+Content-Type: application/json
+
+{
+  "firstName": "test",
+  "lastName": "test",
+  "email": "test.test@gmail.com",
+  "password": "test"
+}
+
 ###
 
 POST http://localhost:8080/api/students-giftery/signIn/
@@ -22,7 +34,17 @@ Content-Type: application/json
   "password": "12345"
 }
 
-###
+### test account
+
+POST http://localhost:8080/api/students-giftery/signIn/
+Content-Type: application/json
+
+{
+  "email": "test.test@gmail.com",
+  "password": "test"
+}
+
+### create organization
 
 POST http://localhost:8080/api/students-giftery/createOrganization/
 Content-Type: application/json
@@ -33,12 +55,30 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua
   "description": "Coffee houses in 7 cities of Russia."
 }
 
-###
+### get all organization
 
 GET http://localhost:8080/api/students-giftery/organizations/
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTMwOTMwfQ.72XI2yxbJ4I0j3n9I6-x-iERua0BtlrczRY71KUO4jY
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTM5MjI0fQ.BcRMgfgUWBGUR4-BKWR-s90-NYG-grnBUzuYiLIkdyY
+
+### get all account by organization id
+
+GET http://localhost:8080/api/students-giftery/accounts/getByOrganization?organizationId=2
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0LnRlc3RAZ21haWwuY29tIiwiZXhwIjoxNjUwMTgzMDcyfQ.XhWGiROnwZK06QR_W4FJDphoK8X8SNDpBsPV8uSVCDE
+
+### join to organization
+
+POST http://localhost:8080/api/students-giftery/organizations/join?organizationId=2
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0LnRlc3RAZ21haWwuY29tIiwiZXhwIjoxNjUwMTg0NzQyfQ.HaBfcrIQdLIP0YC86ES3gkj3yi0W1VTFk1t0IIuyXN8
+
+### deny join request
+
+POST http://localhost:8080/api/students-giftery/organizations/denyJoin?requestId=7
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTg0NjA2fQ.Qc7TXUce6UE39X3kvVVWPOpwYkWMJF99DyE3QD_84Q8
+
+### confirm join request
+
+POST http://localhost:8080/api/students-giftery/organizations/confirmJoin?requestId=8
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTg0Nzk5fQ.kn0Umn9F25BEP45IEKpJIXBlqU1hy-WMY9Kdzs3IAME
 
 ###
 
-GET http://localhost:8080/api/students-giftery/accounts/getByOrganization?organizationId=2
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTMwOTMwfQ.72XI2yxbJ4I0j3n9I6-x-iERua0BtlrczRY71KUO4jY
