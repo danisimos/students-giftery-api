@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class BrandForm {
     private String brandName;
     private String description;
-    private String avatarLink;
 }

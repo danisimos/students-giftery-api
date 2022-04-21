@@ -1,5 +1,6 @@
 package ru.itis.studentsgiftery.services;
 
+import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.OrganizationDto;
 import ru.itis.studentsgiftery.dto.OrganizationJoinRequestDto;
 import ru.itis.studentsgiftery.dto.forms.OrganizationForm;
@@ -18,4 +19,6 @@ public interface OrganizationService {
     OrganizationJoinRequestDto confirmOrganizationJoinRequest(Long requestId, Account account);
 
     OrganizationJoinRequestDto denyOrganizationJoinRequest(Long requestId, Account account);
+
+    AccountDto unjoinFromOrganization(Account account);
 }

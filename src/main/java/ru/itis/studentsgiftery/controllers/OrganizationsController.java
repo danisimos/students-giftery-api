@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.OrganizationDto;
 import ru.itis.studentsgiftery.dto.OrganizationJoinRequestDto;
 import ru.itis.studentsgiftery.dto.forms.OrganizationForm;
@@ -16,11 +17,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/students-giftery/")
+@RequestMapping("/api/students-giftery/organizations/")
 public class OrganizationsController {
     private final OrganizationService organizationService;
 
-    @PostMapping("createOrganization")
+    @PostMapping
     public ResponseEntity<OrganizationDto> createOrganization(@RequestBody OrganizationForm organizationForm,
                                                               Authentication authentication) {
         Account account = ((AccountUserDetails) authentication.getCredentials()).getAccount();
@@ -37,14 +38,14 @@ public class OrganizationsController {
 
     }
 
-    @GetMapping("organizations")
+    @GetMapping
     public ResponseEntity<List<OrganizationDto>> getOrganizations() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(organizationService.getOrganizations());
     }
 
-    @PostMapping("organizations/join")
+    @PostMapping("join")
     public ResponseEntity<OrganizationJoinRequestDto> addOrganizationJoinRequest(@RequestParam(name = "organizationId") Long organizationId,
                                                                                  Authentication authentication) {
         Account account = ((AccountUserDetails) authentication.getCredentials()).getAccount();
@@ -60,7 +61,7 @@ public class OrganizationsController {
         }
     }
 
-    @PostMapping("organizations/denyJoin")
+    @PostMapping("denyJoin")
     public ResponseEntity<OrganizationJoinRequestDto> denyOrganizationJoinRequest(@RequestParam(name = "requestId") Long requestId,
                                                                                      Authentication authentication) {
         Account account = ((AccountUserDetails) authentication.getCredentials()).getAccount();
@@ -76,7 +77,7 @@ public class OrganizationsController {
         }
     }
 
-    @PostMapping("organizations/confirmJoin")
+    @PostMapping("confirmJoin")
     public ResponseEntity<OrganizationJoinRequestDto> confirmOrganizationJoinRequest(@RequestParam(name = "requestId") Long requestId,
                                                                                  Authentication authentication) {
         Account account = ((AccountUserDetails) authentication.getCredentials()).getAccount();
@@ -91,5 +92,14 @@ public class OrganizationsController {
                     .status(HttpStatus.OK)
                     .body(organizationJoinRequestDto);
         }
+    }
+
+    @PostMapping("unjoin")
+    public ResponseEntity<AccountDto> unjoinFromOrganization(Authentication authentication) {
+        Account account = ((AccountUserDetails) authentication.getCredentials()).getAccount();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(organizationService.unjoinFromOrganization(account));
     }
 }

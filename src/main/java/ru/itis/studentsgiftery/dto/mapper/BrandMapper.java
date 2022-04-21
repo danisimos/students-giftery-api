@@ -11,16 +11,9 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class BrandMapper {
-
     public abstract Brand toBrand(BrandDto brandDto);
 
     public abstract BrandDto toBrandDto(Brand brand);
 
     public abstract List<BrandDto> toBrandDtoList(List<Brand> brands);
-
-    @AfterMapping
-    protected void set(Brand brand, @MappingTarget BrandDto brandDto){
-        brandDto.setListCertificateId(brand.getCertificateList().stream().map(s-> s.getId()).collect(Collectors.toList()));
-
-    }
 }

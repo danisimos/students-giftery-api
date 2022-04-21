@@ -46,7 +46,7 @@ Content-Type: application/json
 
 ### create organization
 
-POST http://localhost:8080/api/students-giftery/createOrganization/
+POST http://localhost:8080/api/students-giftery/organizations/
 Content-Type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTMwOTMwfQ.72XI2yxbJ4I0j3n9I6-x-iERua0BtlrczRY71KUO4jY
 
@@ -81,4 +81,10 @@ POST http://localhost:8080/api/students-giftery/organizations/confirmJoin?reques
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTg0Nzk5fQ.kn0Umn9F25BEP45IEKpJIXBlqU1hy-WMY9Kdzs3IAME
 
 ###
+
+POST http://localhost:8080/api/students-giftery/organizations/unjoin
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0LnRlc3RAZ21haWwuY29tIiwiZXhwIjoxNjUwMjA0ODU0fQ.zNYQcAkx4NQyslPM_HnG4id0zRQ0EU8Kmu8nAPRxdoU
+
+###
+
 
