@@ -2,9 +2,11 @@ package ru.itis.studentsgiftery.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.OrganizationDto;
 import ru.itis.studentsgiftery.dto.OrganizationJoinRequestDto;
 import ru.itis.studentsgiftery.dto.forms.OrganizationForm;
+import ru.itis.studentsgiftery.dto.mapper.AccountMapper;
 import ru.itis.studentsgiftery.dto.mapper.OrganizationJoinRequestMapper;
 import ru.itis.studentsgiftery.dto.mapper.OrganizationMapper;
 import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
@@ -27,6 +29,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationsRepository organizationsRepository;
     private final AccountsRepository accountsRepository;
     private final OrganizationJoinRequestRepository organizationJoinRequestRepository;
+    private final AccountMapper accountMapper;
     private final OrganizationMapper organizationMapper;
     private final OrganizationJoinRequestMapper organizationJoinRequestMapper;
 
@@ -135,5 +138,13 @@ public class OrganizationServiceImpl implements OrganizationService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public AccountDto unjoinFromOrganization(Account account) {
+        account.setOrganization(null);
+        account.setRole(Account.Role.USER);
+
+        return accountMapper.toAccountDto(accountsRepository.save(account));
     }
 }

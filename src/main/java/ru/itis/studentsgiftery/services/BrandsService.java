@@ -1,13 +1,13 @@
 package ru.itis.studentsgiftery.services;
 
+import org.springframework.http.ResponseEntity;
 import ru.itis.studentsgiftery.dto.BrandDto;
 import ru.itis.studentsgiftery.dto.forms.BrandForm;
+import ru.itis.studentsgiftery.models.Account;
 
 import java.util.List;
 
 public interface BrandsService {
-    BrandDto saveBrand(BrandForm brandForm);
-
     BrandDto getBrand(Long id);
 
     List<BrandDto> getAllBrands();
@@ -16,4 +16,5 @@ public interface BrandsService {
 
     void deleteBrand(Long id);
 
+    BrandDto createBrand(BrandForm brandForm, Account account);
 }
