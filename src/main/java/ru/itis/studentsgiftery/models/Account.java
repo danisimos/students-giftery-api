@@ -42,7 +42,7 @@ public class Account {
     private String confirmCode;
 
     @OneToMany(mappedBy = "account")
-    private List<Certificate> certificateList;
+    private List<CertificateInstance> certificateInstances;
 
     @OneToMany(mappedBy = "organization")
     private List<OrganizationJoinRequest> joinRequests;

@@ -3,23 +3,23 @@ package ru.itis.studentsgiftery.dto.mapper;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import ru.itis.studentsgiftery.dto.CertificateDto;
-import ru.itis.studentsgiftery.models.Certificate;
+import ru.itis.studentsgiftery.dto.CertificateTemplateDto;
+import ru.itis.studentsgiftery.models.CertificateTemplate;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class CertificateMapper {
 
-    public abstract Certificate toCertificate(CertificateDto certificateDto);
+    public abstract CertificateTemplate toCertificate(CertificateTemplateDto certificateTemplateDto);
 
-    public abstract CertificateDto toCertificateDto(Certificate certificate);
+    public abstract CertificateTemplateDto toCertificateTemplateDto(CertificateTemplate certificateTemplate);
 
-    public abstract List<CertificateDto> toCertificateDtoList(List<Certificate> certificates);
+    public abstract List<CertificateTemplateDto> toCertificateTemplateDtoList(List<CertificateTemplate> certificateTemplates);
 
     @AfterMapping
-    protected void setCertificateUserToCertificateDtoUser(Certificate certificate, @MappingTarget CertificateDto certificateDto){
-        certificateDto.setUserId(certificate.getAccount().getId());
+    protected void setBrandToCertificateTemplateDto(CertificateTemplate certificateTemplate, @MappingTarget CertificateTemplateDto certificateTemplateDto){
+        certificateTemplateDto.setBrandId(certificateTemplate.getBrand().getId());
     }
 
 }

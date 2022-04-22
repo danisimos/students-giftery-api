@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Certificate {
+public class CertificateTemplate {
     public enum State {
         ACTIVE, DELETED
     }
@@ -21,15 +22,15 @@ public class Certificate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer value;
+    @Column(name = "amount")
+    private Integer amount;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @ManyToOne()
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @OneToMany(mappedBy = "certificateTemplate")
+    private List<CertificateInstance> certificateInstances;
 
     @Enumerated(value = EnumType.STRING)
     private State state;
