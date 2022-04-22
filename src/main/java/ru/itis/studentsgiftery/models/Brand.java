@@ -32,7 +32,7 @@ public class Brand {
     private String avatarLink;
 
     @OneToMany(mappedBy = "brand")
-    private List<Certificate> certificateList;
+    private List<CertificateTemplate> certificateTemplates;
 
     @ManyToOne
     @JoinColumn(name = "organization_id")

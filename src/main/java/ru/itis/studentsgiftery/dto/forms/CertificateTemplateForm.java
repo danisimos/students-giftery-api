@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CertificateForm {
-    private Integer value;
-    public Long brandId;
+public class CertificateTemplateForm {
+    private Integer amount;
+
 }

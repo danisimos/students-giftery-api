@@ -1,19 +1,9 @@
 package ru.itis.studentsgiftery.services;
 
-import ru.itis.studentsgiftery.dto.CertificateDto;
-import ru.itis.studentsgiftery.dto.forms.CertificateForm;
-
-import java.util.List;
+import ru.itis.studentsgiftery.dto.CertificateTemplateDto;
+import ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm;
+import ru.itis.studentsgiftery.models.Account;
 
 public interface CertificatesService {
-    CertificateDto saveCertificate(CertificateForm certificateForm);
-
-    CertificateDto getCertificate(Long id);
-
-    List<CertificateDto> getAllCertificates(Long brandId);
-
-    CertificateDto updateCertificate(Long id, CertificateForm newData);
-
-    void deleteCertificate(Long id);
-
+    CertificateTemplateDto addCertificateTemplateToBrand(Long brandId, CertificateTemplateForm certificateForm, Account account);
 }

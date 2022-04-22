@@ -2,61 +2,41 @@ package ru.itis.studentsgiftery.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.itis.studentsgiftery.dto.CertificateDto;
-import ru.itis.studentsgiftery.dto.forms.CertificateForm;
+import ru.itis.studentsgiftery.dto.CertificateTemplateDto;
+import ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm;
 import ru.itis.studentsgiftery.dto.mapper.CertificateMapper;
-import ru.itis.studentsgiftery.exceptions.CertificateNotFoundException;
-import ru.itis.studentsgiftery.models.Certificate;
-import ru.itis.studentsgiftery.repositories.CertificatesRepository;
+import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
+import ru.itis.studentsgiftery.models.Account;
+import ru.itis.studentsgiftery.models.Brand;
+import ru.itis.studentsgiftery.models.CertificateTemplate;
+import ru.itis.studentsgiftery.repositories.BrandsRepository;
+import ru.itis.studentsgiftery.repositories.CertificateTemplatesRepository;
 import ru.itis.studentsgiftery.services.CertificatesService;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CertificatesServiceImpl implements CertificatesService {
+    private final BrandsRepository brandsRepository;
 
-    private final CertificatesRepository certificatesRepository;
+    private final CertificateTemplatesRepository certificateTemplatesRepository;
     private final CertificateMapper certificateMapper;
 
     @Override
-    public CertificateDto saveCertificate(CertificateForm certificateForm) {
-        Certificate newCertificate = Certificate.builder()
-                .value(certificateForm.getValue())
-                .state(Certificate.State.ACTIVE)
+    public CertificateTemplateDto addCertificateTemplateToBrand(Long brandId, CertificateTemplateForm certificateForm, Account account) {
+        Brand brand = brandsRepository.findById(brandId).orElseThrow(BrandNotFoundException::new);
+
+        if(!account.getOrganization().getId().equals(brand.getOrganization().getId())) {
+            return null;
+        }
+
+        CertificateTemplate certificateTemplate = CertificateTemplate.builder()
+                .amount(certificateForm.getAmount())
+                .brand(brand)
+                .state(CertificateTemplate.State.ACTIVE)
                 .build();
 
-        certificatesRepository.save(newCertificate);
+        certificateTemplatesRepository.save(certificateTemplate);
 
-        return certificateMapper.toCertificateDto(newCertificate);
-    }
-
-    @Override
-    public CertificateDto getCertificate(Long id) {
-        Certificate certificate = certificatesRepository.findById(id).orElseThrow(CertificateNotFoundException::new);
-        return certificateMapper.toCertificateDto(certificate);
-    }
-
-    @Override
-    public List<CertificateDto> getAllCertificates(Long brandId) {
-        return certificateMapper.toCertificateDtoList(certificatesRepository.findAllByBrandId(brandId));
-    }
-
-    @Override
-    public CertificateDto updateCertificate(Long id, CertificateForm newData) {
-        Certificate certificate = certificatesRepository.findById(id).orElseThrow(CertificateNotFoundException::new);
-        certificate.setValue(newData.getValue());
-
-        certificatesRepository.save(certificate);
-
-        return certificateMapper.toCertificateDto(certificate);
-    }
-
-    @Override
-    public void deleteCertificate(Long id) {
-        Certificate certificate = certificatesRepository.findById(id).orElseThrow(CertificateNotFoundException::new);
-        certificate.setState(Certificate.State.DELETED);
-
-        certificatesRepository.save(certificate);
+        return certificateMapper.toCertificateTemplateDto(certificateTemplate);
     }
 }
