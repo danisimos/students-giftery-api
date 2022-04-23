@@ -9,7 +9,6 @@ import ru.itis.studentsgiftery.dto.forms.OrganizationForm;
 import ru.itis.studentsgiftery.dto.mapper.AccountMapper;
 import ru.itis.studentsgiftery.dto.mapper.OrganizationJoinRequestMapper;
 import ru.itis.studentsgiftery.dto.mapper.OrganizationMapper;
-import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
 import ru.itis.studentsgiftery.exceptions.OrganizationNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.models.Organization;
@@ -17,7 +16,6 @@ import ru.itis.studentsgiftery.models.OrganizationJoinRequest;
 import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.repositories.OrganizationJoinRequestRepository;
 import ru.itis.studentsgiftery.repositories.OrganizationsRepository;
-import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.OrganizationService;
 
 import java.util.Collections;
