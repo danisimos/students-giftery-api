@@ -35,7 +35,7 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
-    public AccountDto purchaseOperation(Long accountId, Long certificateId) throws LowBalanceException {
+    public AccountDto purchaseOperation(Long accountId, Long certificateId){
         Account account = accountsRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
         CertificateTemplate certificate = certificateTemplatesRepository.findById(certificateId).orElseThrow(CertificateNotFoundException::new);
 

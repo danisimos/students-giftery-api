@@ -8,5 +8,5 @@ public interface BalanceService {
 
     AccountDto addBalance(Long accountId, Integer amount);
 
-    AccountDto purchaseOperation(Long accountId, Long certificateId) throws LowBalanceException;
+    AccountDto purchaseOperation(Long accountId, Long certificateId);
 }
