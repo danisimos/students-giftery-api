@@ -38,6 +38,9 @@ public class Account {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "balance")
+    private Integer balance;
+
     @Column(name = "confirm_code")
     private String confirmCode;
 

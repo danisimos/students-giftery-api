@@ -30,6 +30,7 @@ public class SignUpServiceImpl implements SignUpService {
                 .lastName(signUpForm.getLastName())
                 .email(signUpForm.getEmail())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
+                .balance(0)
                 .confirmCode(UUID.randomUUID().toString())
                 .state(Account.State.NOT_CONFIRMED)
                 .role(Account.Role.USER)
