@@ -15,5 +15,5 @@ public class AccountDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String balance;
+    private Integer balance;
 }

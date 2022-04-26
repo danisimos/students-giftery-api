@@ -1,4 +1,4 @@
 package ru.itis.studentsgiftery.exceptions;
 
-public class LowBalanceException extends Throwable {
+public class LowBalanceException extends RuntimeException {
 }
