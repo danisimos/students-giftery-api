@@ -1,6 +1,7 @@
 package ru.itis.studentsgiftery.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.itis.studentsgiftery.dto.BrandDto;
 import ru.itis.studentsgiftery.dto.forms.BrandForm;
@@ -9,6 +10,7 @@ import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.models.Brand;
 import ru.itis.studentsgiftery.repositories.BrandsRepository;
+import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.BrandsService;
 
 import java.util.ArrayList;
@@ -51,7 +53,8 @@ public class BrandsServiceImpl implements BrandsService {
     }
 
     @Override
-    public BrandDto createBrand(BrandForm brandForm, Account account) {
+    public BrandDto createBrand(BrandForm brandForm) {
+        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
         if(account.getRole().equals(Account.Role.USER)) return null;
 
         Brand brand = Brand.builder()

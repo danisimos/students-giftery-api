@@ -158,6 +158,11 @@
                                 <importMapping>CertificateTemplateDto=ru.itis.studentsgiftery.dto.CertificateTemplateDto</importMapping>
                                 <importMapping>CertificateTemplateForm=ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm</importMapping>
                                 <importMapping>BrandForm=ru.itis.studentsgiftery.dto.forms.BrandForm</importMapping>
+                                <importMapping>SignInForm=ru.itis.studentsgiftery.dto.forms.SignInForm</importMapping>
+                                <importMapping>OrganizationDto=ru.itis.studentsgiftery.dto.OrganizationDto</importMapping>
+                                <importMapping>OrganizationForm=ru.itis.studentsgiftery.dto.forms.OrganizationForm</importMapping>
+                                <importMapping>OrganizationJoinRequestDto=ru.itis.studentsgiftery.dto.OrganizationJoinRequestDto</importMapping>
+                                <importMapping>SignUpForm=ru.itis.studentsgiftery.dto.forms.SignUpForm</importMapping>
                             </importMappings>
                         </configuration>
                     </execution>

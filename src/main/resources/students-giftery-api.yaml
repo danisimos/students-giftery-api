@@ -7,9 +7,30 @@ servers:
 tags:
   - name: Brands
   - name: Accounts
+  - name: SignIn
+  - name: Organizations
+  - name: SignUp
 security:
   - bearerAuth: []
 paths:
+  /api/students-giftery/signIn/:
+    post:
+      operationId: signIn
+      tags:
+        - SignIn
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInForm'
+      responses:
+        200:
+          description: asd
+          content:
+            application/json:
+              schema:
+                type: string
   /api/students-giftery/accounts:
     get:
       security:
@@ -88,7 +109,148 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CertificateTemplateDto'
-
+  /api/students-giftery/organizations/:
+    post:
+      operationId: createOrganization
+      security:
+        - BasicAuth: [ ]
+      tags:
+        - Organizations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationForm'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+               schema:
+                 $ref: '#/components/schemas/OrganizationDto'
+    get:
+      operationId: getOrganizations
+      security:
+        - BasicAuth: [ ]
+      tags:
+        - Organizations
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationDtoList'
+  /api/students-giftery/organizations/join:
+    post:
+      operationId: addOrganizationJoinRequest
+      parameters:
+        - name: organizationId
+          schema:
+            type: integer
+            format: int64
+          in: query
+      security:
+          - BasicAuth: [ ]
+      tags:
+        - Organizations
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationJoinRequestDto'
+  /api/students-giftery/organizations/denyJoin:
+    post:
+      operationId: denyOrganizationJoinRequest
+      parameters:
+        - name: requestId
+          schema:
+            type: integer
+            format: int64
+          in: query
+      security:
+        - BasicAuth: [ ]
+      tags:
+        - Organizations
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationJoinRequestDto'
+  /api/students-giftery/organizations/confirmJoin:
+    post:
+      operationId: confirmOrganizationJoinRequest
+      parameters:
+        - name: requestId
+          schema:
+            type: integer
+            format: int64
+          in: query
+      security:
+        - BasicAuth: [ ]
+      tags:
+        - Organizations
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationJoinRequestDto'
+  /api/students-giftery/organizations/unjoin:
+    post:
+      operationId: unjoinFromOrganization
+      security:
+        - BasicAuth: [ ]
+      tags:
+        - Organizations
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDto'
+  /api/students-giftery/signUp:
+    post:
+      operationId: signUp
+      security: []
+      tags:
+        - SignUp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpForm'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDto'
+  /api/students-giftery/confirm/{confirm-code}:
+    get:
+      operationId: checkConfirmCode
+      security: [ ]
+      tags:
+        - SignUp
+      parameters:
+        - name: confirm-code
+          schema:
+            type: string
+          in: path
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
 components:
   securitySchemes:
     bearerAuth:
@@ -110,3 +272,17 @@ components:
       $ref: '#/components/schemas/CertificateTemplateForm'
     BrandForm:
       $ref: '#/components/schemas/BrandForm'
+    SignInForm:
+      $ref: '#/components/schemas/SignInForm'
+    OrganizationDto:
+      type: object
+    OrganizationForm:
+      $ref: '#/components/schemas/OrganizationForm'
+    OrganizationDtoList:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationDto'
+    OrganizationJoinRequestDto:
+      $ref: '#/components/schemas/OrganizationJoinRequestDto'
+    SignUpForm:
+      $ref: '#/components/schemas/SignUpForm'
