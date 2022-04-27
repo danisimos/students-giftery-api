@@ -2,6 +2,11 @@ GET http://localhost:8080/swagger-ui/index.html
 
 ###
 
+GET http://localhost:8080/api/students-giftery/accounts
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUxMDUzNTg2fQ.oUiCOW9UFtKl5q7rXu_E60tVl_YAzDq4YcqhTd3FB44
+
+###
+
 POST http://localhost:8080/api/students-giftery/signUp/
 Content-Type: application/json
 
@@ -48,7 +53,7 @@ Content-Type: application/json
 
 POST http://localhost:8080/api/students-giftery/organizations/
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUwMTMwOTMwfQ.72XI2yxbJ4I0j3n9I6-x-iERua0BtlrczRY71KUO4jY
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUxMDYyNTM2fQ.LZHMklys3S0KPBoov-JH2MUsJpT5k6jU17N-rfeESrE
 
 {
   "name": "Skuratov Сoffee",
@@ -86,5 +91,14 @@ POST http://localhost:8080/api/students-giftery/organizations/unjoin
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0LnRlc3RAZ21haWwuY29tIiwiZXhwIjoxNjUwMjA0ODU0fQ.zNYQcAkx4NQyslPM_HnG4id0zRQ0EU8Kmu8nAPRxdoU
 
 ###
+
+POST http://localhost:8080/api/students-giftery/brands
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUxMDYzMDA0fQ.5z2NY2aQJT1RvX06MA_X1QCQ5Z6X5Htb15p7kyD6dl0
+Content-Type: application/json
+
+{
+  "brandName": "somename",
+  "description": "somedescription"
+}
 
 

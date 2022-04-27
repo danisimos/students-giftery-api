@@ -52,7 +52,6 @@ public class JwtProvider {
     }
 
     public boolean validate(String token) {
-        System.out.println(token);
         DecodedJWT decodedJWT;
 
         try {
