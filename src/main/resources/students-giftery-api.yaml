@@ -3,18 +3,110 @@ info:
   title: "Students Giftery API"
   version: 1.0.0
 servers:
-  - url: "http://localhost:8080"
+  - url: "http://localhost:8080/api/students-giftery"
 tags:
   - name: Brands
+  - name: Accounts
+security:
+  - bearerAuth: []
 paths:
-  /brands:
+  /api/students-giftery/accounts:
     get:
+      security:
+        - bearerAuth: []
+      operationId: getAll
       tags:
-        - Brands
+        - Accounts
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/AccountDtoList'
+  /api/students-giftery/accounts/getByOrganization:
+    get:
+      security:
+        - bearerAuth: []
+      operationId: getByOrganization
+      parameters:
+        - name: organizationId
+          in: query
+          schema:
+            type: integer
+            format: int64
+      tags:
+        - Accounts
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDtoList'
+  /api/students-giftery/brands/:
+    post:
+      operationId: createBrand
+      security:
+        - BasicAuth: [ ]
+      tags:
+        - Brands
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandForm'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandDto'
+  /api/students-giftery/brands/{brand-id}/certificates/:
+    post:
+      operationId: addCertificateTemplate
+      parameters:
+        - name: brand-id
+          schema:
+            type: integer
+            format: int64
+          in: path
+      security:
+        - BasicAuth: [ ]
+      tags:
+        - Brands
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CertificateTemplateForm'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateTemplateDto'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AccountDto:
+      type: object
+    AccountDtoList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AccountDto'
+    BrandDto:
+      type: object
+    CertificateTemplateDto:
+      type: object
+    CertificateTemplateForm:
+      $ref: '#/components/schemas/CertificateTemplateForm'
+    BrandForm:
+      $ref: '#/components/schemas/BrandForm'

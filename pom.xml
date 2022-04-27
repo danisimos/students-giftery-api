@@ -152,6 +152,13 @@
                                 <useSwaggerAnnotations>false</useSwaggerAnnotations>
                                 <serializableModel>true</serializableModel>
                             </configOptions>
+                            <importMappings>
+                                <importMapping>AccountDto=ru.itis.studentsgiftery.dto.AccountDto</importMapping>
+                                <importMapping>BrandDto=ru.itis.studentsgiftery.dto.BrandDto</importMapping>
+                                <importMapping>CertificateTemplateDto=ru.itis.studentsgiftery.dto.CertificateTemplateDto</importMapping>
+                                <importMapping>CertificateTemplateForm=ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm</importMapping>
+                                <importMapping>BrandForm=ru.itis.studentsgiftery.dto.forms.BrandForm</importMapping>
+                            </importMappings>
                         </configuration>
                     </execution>
                 </executions>

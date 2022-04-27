@@ -8,7 +8,6 @@ import ru.itis.studentsgiftery.dto.mapper.BrandMapper;
 import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.models.Brand;
-import ru.itis.studentsgiftery.models.Certificate;
 import ru.itis.studentsgiftery.repositories.BrandsRepository;
 import ru.itis.studentsgiftery.services.BrandsService;
 

@@ -15,7 +15,6 @@ public class SignUpController {
 
     private final SignUpService signUpService;
 
-    //TODO: add swagger
     @PostMapping("signUp")
     public ResponseEntity<AccountDto> signUp(@RequestBody SignUpForm signUpForm) {
         return ResponseEntity
@@ -26,7 +25,6 @@ public class SignUpController {
     @GetMapping("confirm/{confirmCode}")
     public ResponseEntity<?> checkConfirmCode(@PathVariable("confirmCode") String confirmCode) {
         signUpService.checkConfirm(confirmCode);
-        //TODO: Add swagger
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
