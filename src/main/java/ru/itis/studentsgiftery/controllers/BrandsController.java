@@ -23,43 +23,9 @@ public class BrandsController implements BrandsApi {
     private final CertificatesService certificatesService;
 
     @Override
-    public ResponseEntity<CertificateTemplateDto> addCertificateTemplate(Long brandId, CertificateTemplateForm body) {
-        return BrandsApi.super.addCertificateTemplate(brandId, body);
-    }
-
-
-
-    @PostMapping("/api/students-giftery/brands")
-    public ResponseEntity<BrandDto> createBrand(@RequestBody BrandForm brandForm) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        Account account = ((AccountUserDetails) authentication.getCredentials()).getAccount();
-
-        System.out.println("asdasdasd");
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getCredentials());
-
-        BrandDto brandDto = brandsService.createBrand(brandForm, account);
-
-        if(brandDto == null) {
-            return ResponseEntity
-                    .status(HttpStatus.FORBIDDEN)
-                    .build();
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(brandDto);
-        }
-    }
-
-    @PostMapping("/{brand-id}/certificates/")
-    public ResponseEntity<CertificateTemplateDto> addCertificateTemplate(@PathVariable(name = "brand-id") Long brandId,
-                                                                         @RequestBody CertificateTemplateForm certificateForm,
-                                                                         Authentication authentication) {
-        Account account = ((AccountUserDetails) authentication.getCredentials()).getAccount();
-
+    public ResponseEntity<CertificateTemplateDto> addCertificateTemplate(Long brandId, CertificateTemplateForm certificateForm) {
         CertificateTemplateDto certificateTemplateDto =
-                certificatesService.addCertificateTemplateToBrand(brandId, certificateForm, account);
+                certificatesService.addCertificateTemplateToBrand(brandId, certificateForm);
 
         if(certificateTemplateDto == null) {
             return ResponseEntity
@@ -72,4 +38,18 @@ public class BrandsController implements BrandsApi {
                 .body(certificateTemplateDto);
     }
 
+    @Override
+    public ResponseEntity<BrandDto> createBrand(BrandForm brandForm) {
+        BrandDto brandDto = brandsService.createBrand(brandForm);
+
+        if(brandDto == null) {
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .build();
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(brandDto);
+        }
+    }
 }

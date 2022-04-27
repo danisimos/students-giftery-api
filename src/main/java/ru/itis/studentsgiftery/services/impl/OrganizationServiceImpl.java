@@ -1,6 +1,7 @@
 package ru.itis.studentsgiftery.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.OrganizationDto;
@@ -33,7 +34,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationJoinRequestMapper organizationJoinRequestMapper;
 
     @Override
-    public OrganizationDto createOrganization(OrganizationForm organizationForm, Account account) {
+    public OrganizationDto createOrganization(OrganizationForm organizationForm) {
+        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
         if(account.getRole().equals(Account.Role.ORGANIZATION)) return null;
 
         Organization organization = Organization.builder()
@@ -58,7 +60,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrganizationJoinRequestDto addOrganizationJoinRequest(Long organizationId, Account account) {
+    public OrganizationJoinRequestDto addOrganizationJoinRequest(Long organizationId) {
+        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
         Organization organization = organizationsRepository.findById(organizationId).orElseThrow(OrganizationNotFoundException::new);
 
         if(account.getRole().equals(Account.Role.ORGANIZATION)
@@ -94,7 +97,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrganizationJoinRequestDto confirmOrganizationJoinRequest(Long requestId, Account account) {
+    public OrganizationJoinRequestDto confirmOrganizationJoinRequest(Long requestId) {
+        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
         OrganizationJoinRequest joinRequest = organizationJoinRequestRepository.findById(requestId)
                 .orElseThrow(OrganizationNotFoundException::new);
 
@@ -122,7 +126,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrganizationJoinRequestDto denyOrganizationJoinRequest(Long requestId, Account account) {
+    public OrganizationJoinRequestDto denyOrganizationJoinRequest(Long requestId) {
+        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
         OrganizationJoinRequest joinRequest = organizationJoinRequestRepository.findById(requestId)
                 .orElseThrow(OrganizationNotFoundException::new);
 
@@ -140,7 +145,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public AccountDto unjoinFromOrganization(Account account) {
+    public AccountDto unjoinFromOrganization() {
+        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
         account.setOrganization(null);
         account.setRole(Account.Role.USER);
 

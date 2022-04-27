@@ -16,5 +16,5 @@ public interface BrandsService {
 
     void deleteBrand(Long id);
 
-    BrandDto createBrand(BrandForm brandForm, Account account);
+    BrandDto createBrand(BrandForm brandForm);
 }

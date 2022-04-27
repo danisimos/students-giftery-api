@@ -4,28 +4,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.itis.api.SignUpApi;
 import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.forms.SignUpForm;
 import ru.itis.studentsgiftery.services.SignUpService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/students-giftery/")
-public class SignUpController {
-
+public class SignUpController implements SignUpApi {
     private final SignUpService signUpService;
 
-    @PostMapping("signUp")
-    public ResponseEntity<AccountDto> signUp(@RequestBody SignUpForm signUpForm) {
+    @Override
+    public ResponseEntity<String> checkConfirmCode(String confirmCode) {
+        signUpService.checkConfirm(confirmCode);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Success");
+    }
+
+    @Override
+    public ResponseEntity<AccountDto> signUp(SignUpForm signUpForm) {
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
                 .body(signUpService.signUp(signUpForm));
-    }
-
-    @GetMapping("confirm/{confirmCode}")
-    public ResponseEntity<?> checkConfirmCode(@PathVariable("confirmCode") String confirmCode) {
-        signUpService.checkConfirm(confirmCode);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
 

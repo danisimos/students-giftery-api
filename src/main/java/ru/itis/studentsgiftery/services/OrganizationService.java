@@ -10,15 +10,15 @@ import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import java.util.List;
 
 public interface OrganizationService {
-    OrganizationDto createOrganization(OrganizationForm organizationForm, Account account);
+    OrganizationDto createOrganization(OrganizationForm organizationForm);
 
     List<OrganizationDto> getOrganizations();
 
-    OrganizationJoinRequestDto addOrganizationJoinRequest(Long organizationId, Account account);
+    OrganizationJoinRequestDto addOrganizationJoinRequest(Long organizationId);
 
-    OrganizationJoinRequestDto confirmOrganizationJoinRequest(Long requestId, Account account);
+    OrganizationJoinRequestDto confirmOrganizationJoinRequest(Long requestId);
 
-    OrganizationJoinRequestDto denyOrganizationJoinRequest(Long requestId, Account account);
+    OrganizationJoinRequestDto denyOrganizationJoinRequest(Long requestId);
 
-    AccountDto unjoinFromOrganization(Account account);
+    AccountDto unjoinFromOrganization();
 }
