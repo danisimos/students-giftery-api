@@ -19,9 +19,14 @@ public class CertificateTemplateDto {
         ACTIVE, DELETED
     }
 
+    public enum Type {
+        PRODUCT, DISCOUNT, BONUS
+    }
+
     private Long id;
     private Integer amount;
     private Long brandId;
 
     private State state;
+    private Type type;
 }
