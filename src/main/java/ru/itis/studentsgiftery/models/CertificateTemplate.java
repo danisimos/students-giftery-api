@@ -29,6 +29,9 @@ public class CertificateTemplate {
     @Column(name = "amount")
     private Integer amount;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
