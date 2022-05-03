@@ -36,6 +36,7 @@ public class CertificatesServiceImpl implements CertificatesService {
                 .amount(certificateForm.getAmount())
                 .brand(brand)
                 .state(CertificateTemplate.State.ACTIVE)
+                .type(certificateForm.gettype())
                 .build();
 
         certificateTemplatesRepository.save(certificateTemplate);

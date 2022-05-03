@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CertificateTemplateForm {
-    private Integer amount;
+    public enum Type {
+        PRODUCT, DISCOUNT, BONUS
+    }
 
+    private Integer amount;
+    private Type type;
 }

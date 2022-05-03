@@ -18,6 +18,10 @@ public class CertificateTemplate {
         ACTIVE, DELETED
     }
 
+    public enum Type {
+        PRODUCT, DISCOUNT, BONUS
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,4 +38,7 @@ public class CertificateTemplate {
 
     @Enumerated(value = EnumType.STRING)
     private State state;
+
+    @Enumerated(value = EnumType.STRING)
+    private Type type;
 }
