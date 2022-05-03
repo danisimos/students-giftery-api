@@ -25,6 +25,7 @@ public class CertificateTemplateDto {
 
     private Long id;
     private Integer amount;
+    private String description;
     private Long brandId;
 
     private State state;

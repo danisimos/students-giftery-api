@@ -13,5 +13,6 @@ public class CertificateTemplateForm {
     }
 
     private Integer amount;
+    private String description;
     private Type type;
 }
