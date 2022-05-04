@@ -15,7 +15,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@NotSameNames(names = {"firstName", "lastName"}, message = "{names} are same")
 public class OrganizationDto {
     private Long id;
     @NotBlank

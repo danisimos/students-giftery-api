@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@NotSameNames(names = {"firstName", "lastName"}, message = "{names} are same")
 public class BrandDto {
     private Long id;
     @NotBlank

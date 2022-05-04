@@ -13,7 +13,6 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@NotSameNames(names = {"firstName", "lastName"}, message = "{names} are same")
 public class SignUpForm {
     @NotBlank
     private String firstName;
