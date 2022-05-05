@@ -21,6 +21,9 @@ public class CertificateInstance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "code")
+    private String code;
+
     @ManyToOne
     @JoinColumn(name = "account")
     private Account account;

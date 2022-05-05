@@ -101,4 +101,7 @@ Content-Type: application/json
   "description": "somedescription"
 }
 
+###
 
+POST http://localhost:8080/api/students-giftery/certificates/1/buy/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0LnRlc3RAZ21haWwuY29tIiwiZXhwIjoxNjUxNzQxNTI2fQ.ziRfyGdc_c0jrawNhRrvnFlS7bg6f3MQ2vjkr0q09H4
