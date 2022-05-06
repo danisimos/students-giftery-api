@@ -7,6 +7,7 @@ import ru.itis.studentsgiftery.dto.CertificateInstanceDto;
 import ru.itis.studentsgiftery.dto.CertificateTemplateDto;
 import ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm;
 import ru.itis.studentsgiftery.dto.mapper.CertificateMapper;
+import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
 import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
 import ru.itis.studentsgiftery.exceptions.CertificateNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
@@ -20,7 +21,10 @@ import ru.itis.studentsgiftery.repositories.CertificateTemplatesRepository;
 import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.BalanceService;
 import ru.itis.studentsgiftery.services.CertificatesService;
+import ru.itis.studentsgiftery.util.EmailUtil;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -30,9 +34,8 @@ public class CertificatesServiceImpl implements CertificatesService {
     private final AccountsRepository accountsRepository;
     private final CertificateTemplatesRepository certificateTemplatesRepository;
     private final CertificateInstancesRepository certificateInstancesRepository;
-
+    private final EmailUtil emailUtil;
     private final BalanceService balanceService;
-
     private final CertificateMapper certificateMapper;
 
     @Override
@@ -78,6 +81,41 @@ public class CertificatesServiceImpl implements CertificatesService {
 
         accountsRepository.save(account);
         certificateTemplatesRepository.save(certificateTemplate);
+
+        return certificateMapper.toCertificateInstanceDto(certificateInstancesRepository.save(certificateInstance));
+    }
+
+    //maybe we should add @Transactional
+    @Override
+    public CertificateInstanceDto buyCertificateAsGift(Long certificateTemplateId, Long accountId) {
+        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account friendAccount = accountsRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+
+        balanceService.purchaseOperation(account, certificateTemplateId);
+
+        CertificateTemplate certificateTemplate = certificateTemplatesRepository.findById(certificateTemplateId)
+                .orElseThrow(CertificateNotFoundException::new);
+
+        CertificateInstance certificateInstance = CertificateInstance.builder()
+                .state(CertificateInstance.State.NOT_ACTIVATED)
+                .code(UUID.randomUUID().toString())
+                .account(account)
+                .certificateTemplate(certificateTemplate)
+                .build();
+
+        friendAccount.getCertificateInstances().add(certificateInstance);
+        certificateTemplate.getCertificateInstances().add(certificateInstance);
+
+        accountsRepository.save(friendAccount);
+        certificateTemplatesRepository.save(certificateTemplate);
+
+        Map<String, Object> templateData = new HashMap<>();
+        templateData.put("first_name", friendAccount.getFirstName());
+        templateData.put("last_name", friendAccount.getLastName());
+        templateData.put("email", account.getEmail());//if we don't want to show buyer email delete this line
+        templateData.put("brand", certificateTemplate.getBrand());
+
+        emailUtil.sendMail(friendAccount.getEmail(), "Someone just gave you a certificate", "giftNotificationMail.ftlh", templateData);
 
         return certificateMapper.toCertificateInstanceDto(certificateInstancesRepository.save(certificateInstance));
     }

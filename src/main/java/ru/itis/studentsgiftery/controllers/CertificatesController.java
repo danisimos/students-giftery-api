@@ -22,4 +22,13 @@ public class CertificatesController {
                 .status(HttpStatus.OK)
                 .body(certificatesService.buyCertificate(certificateTemplateId));
     }
+
+    //TODO: add to swagger
+    @PostMapping("/certificates/{certificate-id}/buyAsGift/{accountId}")
+    public ResponseEntity<CertificateInstanceDto> buyCertificateAsGift(@PathVariable(name = "certificate-id") Long certificateTemplateId,
+                                                                       @PathVariable(name = "accountId") Long accountId) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(certificatesService.buyCertificateAsGift(certificateTemplateId, accountId));
+    }
 }
