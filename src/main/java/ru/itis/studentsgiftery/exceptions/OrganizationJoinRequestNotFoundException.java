@@ -1,4 +1,10 @@
 package ru.itis.studentsgiftery.exceptions;
 
-public class OrganizationJoinRequestNotFoundException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+public class OrganizationJoinRequestNotFoundException extends StudentsNotFoundException{
+    public OrganizationJoinRequestNotFoundException (String message){
+        super(message);
+    }
 }

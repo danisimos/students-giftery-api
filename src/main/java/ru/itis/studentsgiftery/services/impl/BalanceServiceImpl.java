@@ -13,6 +13,8 @@ import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.repositories.CertificateTemplatesRepository;
 import ru.itis.studentsgiftery.services.BalanceService;
 
+import java.util.function.Supplier;
+
 @Service
 @RequiredArgsConstructor
 public class BalanceServiceImpl implements BalanceService {
@@ -22,13 +24,17 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public Integer getAccountBalance(Long accountId) {
-        Account account = accountsRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        Account account = accountsRepository.findById(accountId).orElseThrow((Supplier<RuntimeException>) ()
+                -> new AccountNotFoundException("Account not found")
+        );
         return account.getBalance();
     }
 
     @Override
     public AccountDto addBalance(Long accountId, Integer amount) {
-        Account account = accountsRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        Account account = accountsRepository.findById(accountId).orElseThrow((Supplier<RuntimeException>) ()
+                -> new AccountNotFoundException("Account not found")
+        );
         account.setBalance(account.getBalance() + amount);
 
         return accountMapper.toAccountDto(accountsRepository.save(account));
@@ -36,12 +42,14 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public AccountDto purchaseOperation(Account account, Long certificateId){
-        CertificateTemplate certificate = certificateTemplatesRepository.findById(certificateId).orElseThrow(CertificateNotFoundException::new);
+        CertificateTemplate certificate = certificateTemplatesRepository.findById(certificateId).orElseThrow((Supplier<RuntimeException>) ()
+                -> new CertificateNotFoundException("Certificate not found")
+        );
 
         if (account.getBalance() >= certificate.getAmount()){
             account.setBalance(account.getBalance() - certificate.getAmount());
         } else {
-            throw new LowBalanceException();
+            throw new LowBalanceException("Low balance");
         }
 
         return accountMapper.toAccountDto(accountsRepository.save(account));

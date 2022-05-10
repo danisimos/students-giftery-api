@@ -1,4 +1,10 @@
 package ru.itis.studentsgiftery.exceptions;
 
-public class BrandNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+public class BrandNotFoundException extends StudentsNotFoundException {
+    public BrandNotFoundException (String message){
+        super(message);
+    }
 }

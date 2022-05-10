@@ -13,6 +13,7 @@ import ru.itis.studentsgiftery.services.SignUpService;
 import ru.itis.studentsgiftery.util.EmailUtil;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +52,9 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public void checkConfirm(String confirmCode) {
-        Account account = accountsRepository.findAccountByConfirmCode(confirmCode).orElseThrow(AccountNotFoundException::new);
+        Account account = accountsRepository.findAccountByConfirmCode(confirmCode).orElseThrow((Supplier<RuntimeException>) ()
+                -> new AccountNotFoundException("Account not found")
+        );
         if (account.getState().equals(Account.State.NOT_CONFIRMED)) {
             account.setState(Account.State.CONFIRMED);
             accountsRepository.save(account);
