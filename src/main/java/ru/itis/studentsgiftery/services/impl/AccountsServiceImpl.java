@@ -10,6 +10,7 @@ import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.services.AccountsService;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,9 @@ public class AccountsServiceImpl implements AccountsService {
 
     @Override
     public AccountDto getAccount(Long id) {
-        Account account = accountsRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+        Account account = accountsRepository.findById(id).orElseThrow((Supplier<RuntimeException>) ()
+                -> new AccountNotFoundException("Account not found")
+        );
         return accountMapper.toAccountDto(account);
     }
 
@@ -31,7 +34,9 @@ public class AccountsServiceImpl implements AccountsService {
 
     @Override
     public void deleteAccount(Long id) {
-        Account account = accountsRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+        Account account = accountsRepository.findById(id).orElseThrow((Supplier<RuntimeException>) ()
+                -> new AccountNotFoundException("Account not found")
+        );
         account.setState(Account.State.DELETED);
 
         accountsRepository.save(account);

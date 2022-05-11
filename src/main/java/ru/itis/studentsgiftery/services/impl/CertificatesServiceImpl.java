@@ -27,6 +27,7 @@ import ru.itis.studentsgiftery.util.EmailUtil;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +44,9 @@ public class CertificatesServiceImpl implements CertificatesService {
     @Override
     public CertificateTemplateDto addCertificateTemplateToBrand(Long brandId, CertificateTemplateForm certificateForm) {
         Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
-        Brand brand = brandsRepository.findById(brandId).orElseThrow(BrandNotFoundException::new);
+        Brand brand = brandsRepository.findById(brandId).orElseThrow((Supplier<RuntimeException>) ()
+                -> new BrandNotFoundException("Brand not found")
+        );
 
         if(!account.getOrganization().getId().equals(brand.getOrganization().getId())) {
             return null;
@@ -70,7 +73,9 @@ public class CertificatesServiceImpl implements CertificatesService {
         balanceService.purchaseOperation(account, certificateTemplateId);
 
         CertificateTemplate certificateTemplate = certificateTemplatesRepository.findById(certificateTemplateId)
-                .orElseThrow(CertificateNotFoundException::new);
+                .orElseThrow((Supplier<RuntimeException>) ()
+                        -> new CertificateNotFoundException("Certificate not found")
+                );
 
         CertificateInstance certificateInstance = CertificateInstance.builder()
                 .state(CertificateInstance.State.NOT_ACTIVATED)

@@ -17,6 +17,7 @@ import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.function.Supplier;
 
 @Component
 @RequiredArgsConstructor
@@ -33,7 +34,9 @@ public class JwtProvider {
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secret)).build().verify(token);
         String email = decodedJWT.getSubject();
 
-        Account account = accountsRepository.findAccountByEmail(email).orElseThrow(AccountNotFoundException::new);
+        Account account = accountsRepository.findAccountByEmail(email).orElseThrow((Supplier<RuntimeException>) ()
+                -> new AccountNotFoundException("Account not found")
+        );
         AccountUserDetails accountUserDetails = new AccountUserDetails(account);
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =

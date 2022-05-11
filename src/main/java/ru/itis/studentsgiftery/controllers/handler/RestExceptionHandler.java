@@ -7,6 +7,10 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
+import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
+import ru.itis.studentsgiftery.exceptions.LowBalanceException;
+import ru.itis.studentsgiftery.exceptions.StudentsNotFoundException;
 import ru.itis.studentsgiftery.validation.http.ValidationErrorDto;
 import ru.itis.studentsgiftery.validation.http.ValidationExceptionResponse;
 
@@ -39,5 +43,15 @@ public class RestExceptionHandler {
                 .errors(errors)
                 .build());
 
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<StudentsNotFoundException> StudentsNotFoundExceptionHandler(StudentsNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<LowBalanceException> LowBalanceExceptionHandler(LowBalanceException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
     }
 }
