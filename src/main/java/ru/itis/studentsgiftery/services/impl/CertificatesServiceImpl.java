@@ -3,6 +3,7 @@ package ru.itis.studentsgiftery.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.studentsgiftery.dto.CertificateInstanceDto;
 import ru.itis.studentsgiftery.dto.CertificateTemplateDto;
 import ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm;
@@ -38,6 +39,7 @@ public class CertificatesServiceImpl implements CertificatesService {
     private final BalanceService balanceService;
     private final CertificateMapper certificateMapper;
 
+    @Transactional
     @Override
     public CertificateTemplateDto addCertificateTemplateToBrand(Long brandId, CertificateTemplateForm certificateForm) {
         Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
@@ -60,6 +62,7 @@ public class CertificatesServiceImpl implements CertificatesService {
         return certificateMapper.toCertificateTemplateDto(certificateTemplate);
     }
 
+    @Transactional
     @Override
     public CertificateInstanceDto buyCertificate(Long certificateTemplateId) {
         Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
@@ -85,7 +88,7 @@ public class CertificatesServiceImpl implements CertificatesService {
         return certificateMapper.toCertificateInstanceDto(certificateInstancesRepository.save(certificateInstance));
     }
 
-    //maybe we should add @Transactional
+    @Transactional
     @Override
     public CertificateInstanceDto buyCertificateAsGift(Long certificateTemplateId, Long accountId) {
         Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
@@ -99,7 +102,7 @@ public class CertificatesServiceImpl implements CertificatesService {
         CertificateInstance certificateInstance = CertificateInstance.builder()
                 .state(CertificateInstance.State.NOT_ACTIVATED)
                 .code(UUID.randomUUID().toString())
-                .account(account)
+                .account(friendAccount)
                 .certificateTemplate(certificateTemplate)
                 .build();
 
