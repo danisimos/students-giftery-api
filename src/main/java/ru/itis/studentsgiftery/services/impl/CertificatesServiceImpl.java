@@ -9,6 +9,7 @@ import ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm;
 import ru.itis.studentsgiftery.dto.mapper.CertificateMapper;
 import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
 import ru.itis.studentsgiftery.exceptions.CertificateNotFoundException;
+import ru.itis.studentsgiftery.exceptions.ForbiddenException;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.models.Brand;
 import ru.itis.studentsgiftery.models.CertificateInstance;
@@ -43,8 +44,8 @@ public class CertificatesServiceImpl implements CertificatesService {
                 -> new BrandNotFoundException("Brand not found")
         );
 
-        if(!account.getOrganization().getId().equals(brand.getOrganization().getId())) {
-            return null;
+        if(!account.getRole().equals(Account.Role.ORGANIZATION) || !account.getOrganization().getId().equals(brand.getOrganization().getId())) {
+            throw new ForbiddenException("this user is not from that organization or not organization");
         }
 
         CertificateTemplate certificateTemplate = CertificateTemplate.builder()

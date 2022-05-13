@@ -11,6 +11,7 @@ import ru.itis.studentsgiftery.dto.mapper.AccountMapper;
 import ru.itis.studentsgiftery.dto.mapper.OrganizationJoinRequestMapper;
 import ru.itis.studentsgiftery.dto.mapper.OrganizationMapper;
 import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
+import ru.itis.studentsgiftery.exceptions.ForbiddenException;
 import ru.itis.studentsgiftery.exceptions.OrganizationNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.models.Organization;
@@ -38,7 +39,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public OrganizationDto createOrganization(OrganizationForm organizationForm) {
         Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
-        if(account.getRole().equals(Account.Role.ORGANIZATION)) return null;
+        if(account.getRole().equals(Account.Role.ORGANIZATION)) throw new ForbiddenException("this user is not organization");
 
         Organization organization = Organization.builder()
                 .name(organizationForm.getName())
@@ -69,7 +70,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         );
 
         if(account.getRole().equals(Account.Role.ORGANIZATION)
-                || account.getOrganization().getId().equals(organizationId)) return null;
+                || account.getOrganization().getId().equals(organizationId)) throw new ForbiddenException("this user already organization");
 
         OrganizationJoinRequest joinRequest = OrganizationJoinRequest.builder()
                 .organization(organization)
@@ -89,8 +90,6 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(account.getJoinRequests() == null) {
             account.setJoinRequests(Collections.singletonList(joinRequest));
         } else {
-            System.out.println(account);
-            System.out.println(account.getJoinRequests());
             account.getJoinRequests().add(joinRequest);
         }
 
@@ -127,7 +126,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
             return organizationJoinRequestMapper.toOrganizationJoinRequestDto(joinRequest);
         } else {
-            return null;
+            throw new ForbiddenException("not allowed");
         }
     }
 
@@ -148,7 +147,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
             return organizationJoinRequestMapper.toOrganizationJoinRequestDto(joinRequest);
         } else {
-            return null;
+            throw new ForbiddenException("not allowed");
         }
     }
 
