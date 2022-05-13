@@ -7,28 +7,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.itis.api.CertificatesApi;
 import ru.itis.studentsgiftery.dto.CertificateInstanceDto;
 import ru.itis.studentsgiftery.services.CertificatesService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/students-giftery")
-public class CertificatesController {
+public class CertificatesController implements CertificatesApi {
     private final CertificatesService certificatesService;
 
-    @PostMapping("/certificates/{certificate-id}/buy/")
-    public ResponseEntity<CertificateInstanceDto> buyCertificate(@PathVariable(name = "certificate-id") Long certificateTemplateId) {
+    @Override
+    public ResponseEntity<CertificateInstanceDto> buyCertificate(Long certificateId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(certificatesService.buyCertificate(certificateTemplateId));
+                .body(certificatesService.buyCertificate(certificateId));
     }
 
-    //TODO: add to swagger
-    @PostMapping("/certificates/{certificate-id}/buyAsGift/{accountId}")
-    public ResponseEntity<CertificateInstanceDto> buyCertificateAsGift(@PathVariable(name = "certificate-id") Long certificateTemplateId,
-                                                                       @PathVariable(name = "accountId") Long accountId) {
+    @Override
+    public ResponseEntity<CertificateInstanceDto> buyCertificateAsGift(Long certificateId, Long accountId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(certificatesService.buyCertificateAsGift(certificateTemplateId, accountId));
+                .body(certificatesService.buyCertificateAsGift(certificateId, accountId));
     }
 }

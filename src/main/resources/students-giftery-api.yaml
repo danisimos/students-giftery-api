@@ -10,6 +10,7 @@ tags:
   - name: SignIn
   - name: Organizations
   - name: SignUp
+  - name: Certificates
 security:
   - bearerAuth: []
 paths:
@@ -251,6 +252,49 @@ paths:
             application/json:
               schema:
                 type: string
+  /api/students-giftery/certificates/{certificate-id}/buy/:
+    get:
+      operationId: buyCertificate
+      security: [ ]
+      tags:
+        - Certificates
+      parameters:
+        - name: certificate-id
+          schema:
+            type: integer
+            format: int64
+          in: path
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateInstanceDto'
+  /api/students-giftery/certificates/{certificate-id}/buyAsGift/{account-id}/:
+    get:
+      operationId: buyCertificateAsGift
+      security: [ ]
+      tags:
+        - Certificates
+      parameters:
+        - name: certificate-id
+          schema:
+            type: integer
+            format: int64
+          in: path
+        - name: account-id
+          schema:
+            type: integer
+            format: int64
+          in: path
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateInstanceDto'
 components:
   securitySchemes:
     bearerAuth:
@@ -286,3 +330,5 @@ components:
       $ref: '#/components/schemas/OrganizationJoinRequestDto'
     SignUpForm:
       $ref: '#/components/schemas/SignUpForm'
+    CertificateInstanceDto:
+      $ref: '#/components/schemas/CertificateTemplateDto'
