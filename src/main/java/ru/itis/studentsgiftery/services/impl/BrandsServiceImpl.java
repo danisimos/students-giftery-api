@@ -8,6 +8,7 @@ import ru.itis.studentsgiftery.dto.forms.BrandForm;
 import ru.itis.studentsgiftery.dto.mapper.BrandMapper;
 import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
 import ru.itis.studentsgiftery.exceptions.CertificateNotFoundException;
+import ru.itis.studentsgiftery.exceptions.ForbiddenException;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.models.Brand;
 import ru.itis.studentsgiftery.repositories.BrandsRepository;
@@ -63,7 +64,7 @@ public class BrandsServiceImpl implements BrandsService {
     @Override
     public BrandDto createBrand(BrandForm brandForm) {
         Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
-        if(account.getRole().equals(Account.Role.USER)) return null;
+        if(account.getRole().equals(Account.Role.USER)) throw new ForbiddenException("this user is not organization");
 
         Brand brand = Brand.builder()
                 .brandName(brandForm.getBrandName())
