@@ -163,6 +163,7 @@
                                 <importMapping>OrganizationForm=ru.itis.studentsgiftery.dto.forms.OrganizationForm</importMapping>
                                 <importMapping>OrganizationJoinRequestDto=ru.itis.studentsgiftery.dto.OrganizationJoinRequestDto</importMapping>
                                 <importMapping>SignUpForm=ru.itis.studentsgiftery.dto.forms.SignUpForm</importMapping>
+                                <importMapping>CertificateInstanceDto=ru.itis.studentsgiftery.dto.CertificateInstanceDto</importMapping>
                             </importMappings>
                         </configuration>
                     </execution>

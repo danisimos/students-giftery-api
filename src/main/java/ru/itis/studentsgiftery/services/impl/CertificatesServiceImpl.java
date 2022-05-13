@@ -97,12 +97,12 @@ public class CertificatesServiceImpl implements CertificatesService {
     @Override
     public CertificateInstanceDto buyCertificateAsGift(Long certificateTemplateId, Long accountId) {
         Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
-        Account friendAccount = accountsRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        Account friendAccount = accountsRepository.findById(accountId).orElseThrow(() -> new AccountNotFoundException("no such account"));
 
         balanceService.purchaseOperation(account, certificateTemplateId);
 
         CertificateTemplate certificateTemplate = certificateTemplatesRepository.findById(certificateTemplateId)
-                .orElseThrow(CertificateNotFoundException::new);
+                .orElseThrow(() -> new CertificateNotFoundException("no such certificate"));
 
         CertificateInstance certificateInstance = CertificateInstance.builder()
                 .state(CertificateInstance.State.NOT_ACTIVATED)
