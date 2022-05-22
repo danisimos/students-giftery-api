@@ -23,6 +23,7 @@ import ru.itis.studentsgiftery.repositories.CertificateTemplatesRepository;
 import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.BalanceService;
 import ru.itis.studentsgiftery.services.CertificatesService;
+import ru.itis.studentsgiftery.services.SecurityService;
 import ru.itis.studentsgiftery.util.EmailUtil;
 
 import java.util.HashMap;
@@ -40,11 +41,12 @@ public class CertificatesServiceImpl implements CertificatesService {
     private final EmailUtil emailUtil;
     private final BalanceService balanceService;
     private final CertificateMapper certificateMapper;
+    private final SecurityService securityService;
 
     @Transactional
     @Override
     public CertificateTemplateDto addCertificateTemplateToBrand(Long brandId, CertificateTemplateForm certificateForm) {
-        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account account = securityService.getAuthorizedAccount();
         Brand brand = brandsRepository.findById(brandId).orElseThrow((Supplier<RuntimeException>) ()
                 -> new BrandNotFoundException("Brand not found")
         );
@@ -69,7 +71,7 @@ public class CertificatesServiceImpl implements CertificatesService {
     @Transactional
     @Override
     public CertificateInstanceDto buyCertificate(Long certificateTemplateId) {
-        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account account = securityService.getAuthorizedAccount();
 
         balanceService.purchaseOperation(account, certificateTemplateId);
 
@@ -97,7 +99,7 @@ public class CertificatesServiceImpl implements CertificatesService {
     @Transactional
     @Override
     public CertificateInstanceDto buyCertificateAsGift(Long certificateTemplateId, Long accountId) {
-        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account account = securityService.getAuthorizedAccount();
         Account friendAccount = accountsRepository.findById(accountId).orElseThrow(() -> new AccountNotFoundException("no such account"));
 
         balanceService.purchaseOperation(account, certificateTemplateId);
@@ -118,13 +120,8 @@ public class CertificatesServiceImpl implements CertificatesService {
         accountsRepository.save(friendAccount);
         certificateTemplatesRepository.save(certificateTemplate);
 
-        Map<String, Object> templateData = new HashMap<>();
-        templateData.put("first_name", friendAccount.getFirstName());
-        templateData.put("last_name", friendAccount.getLastName());
-        templateData.put("email", account.getEmail());//if we don't want to show buyer email delete this line
-        templateData.put("brand", certificateTemplate.getBrand());
-
-        emailUtil.sendMail(friendAccount.getEmail(), "Someone just gave you a certificate", "giftNotificationMail.ftlh", templateData);
+        emailUtil.sendGiftNoticeMail(friendAccount.getEmail(), "Someone just gave you a certificate",
+                "giftNotificationMail.ftlh", account, friendAccount, certificateTemplate);
 
         return certificateMapper.toCertificateInstanceDto(certificateInstancesRepository.save(certificateInstance));
     }

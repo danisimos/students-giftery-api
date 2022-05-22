@@ -21,6 +21,7 @@ import ru.itis.studentsgiftery.repositories.OrganizationJoinRequestRepository;
 import ru.itis.studentsgiftery.repositories.OrganizationsRepository;
 import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.OrganizationService;
+import ru.itis.studentsgiftery.services.SecurityService;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,10 +36,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final AccountMapper accountMapper;
     private final OrganizationMapper organizationMapper;
     private final OrganizationJoinRequestMapper organizationJoinRequestMapper;
+    private final SecurityService securityService;
 
     @Override
     public OrganizationDto createOrganization(OrganizationForm organizationForm) {
-        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account account = securityService.getAuthorizedAccount();
         if(account.getRole().equals(Account.Role.ORGANIZATION)) throw new ForbiddenException("this user is not organization");
 
         Organization organization = Organization.builder()
@@ -64,7 +66,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public OrganizationJoinRequestDto addOrganizationJoinRequest(Long organizationId) {
-        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account account = securityService.getAuthorizedAccount();
         Organization organization = organizationsRepository.findById(organizationId).orElseThrow((Supplier<RuntimeException>) ()
                 -> new OrganizationNotFoundException("Organization not found")
         );
@@ -81,17 +83,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         OrganizationJoinRequestDto joinRequestDto = organizationJoinRequestMapper
                 .toOrganizationJoinRequestDto(organizationJoinRequestRepository.save(joinRequest));
 
-        if(organization.getJoinRequests() == null) {
-            organization.setJoinRequests(Collections.singletonList(joinRequest));
-        } else {
-            organization.getJoinRequests().add(joinRequest);
-        }
+        organization.getJoinRequests().add(joinRequest);
 
-        if(account.getJoinRequests() == null) {
-            account.setJoinRequests(Collections.singletonList(joinRequest));
-        } else {
-            account.getJoinRequests().add(joinRequest);
-        }
+        account.getJoinRequests().add(joinRequest);
 
         organizationsRepository.save(organization);
         accountsRepository.save(account);
@@ -101,7 +95,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public OrganizationJoinRequestDto confirmOrganizationJoinRequest(Long requestId) {
-        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account account = securityService.getAuthorizedAccount();
         OrganizationJoinRequest joinRequest = organizationJoinRequestRepository.findById(requestId)
                 .orElseThrow((Supplier<RuntimeException>) ()
                         -> new OrganizationNotFoundException("Organization not found")
@@ -132,7 +126,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public OrganizationJoinRequestDto denyOrganizationJoinRequest(Long requestId) {
-        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account account = securityService.getAuthorizedAccount();
         OrganizationJoinRequest joinRequest = organizationJoinRequestRepository.findById(requestId)
                 .orElseThrow((Supplier<RuntimeException>) ()
                         -> new OrganizationNotFoundException("Organization not found")
@@ -153,7 +147,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public AccountDto unjoinFromOrganization() {
-        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account account = securityService.getAuthorizedAccount();
         account.setOrganization(null);
         account.setRole(Account.Role.USER);
 

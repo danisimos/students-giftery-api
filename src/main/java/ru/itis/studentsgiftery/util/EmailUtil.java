@@ -9,7 +9,10 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import ru.itis.studentsgiftery.models.Account;
+import ru.itis.studentsgiftery.models.CertificateTemplate;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -23,8 +26,37 @@ public class EmailUtil {
     @Value("${spring.mail.username}")
     private String from;
 
-    public void sendMail(String to, String subject, String templateName, Map<String, Object> templateData){
+    public void sendConfirmMail(String to, String subject, String templateName, Account newAccount){
         try {
+            Map<String, Object> templateData = new HashMap<>();
+            templateData.put("first_name", newAccount.getFirstName());
+            templateData.put("last_name", newAccount.getLastName());
+            templateData.put("confirm_code", newAccount.getConfirmCode());
+            templateData.put("email", newAccount.getEmail());
+
+            String templateContent = FreeMarkerTemplateUtils.processTemplateIntoString(freeMarkerConfigurer.getConfiguration().getTemplate(templateName), templateData);
+            MimeMessagePreparator preparator = mimeMessage -> {
+                MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+                messageHelper.setSubject(subject);
+                messageHelper.setText(templateContent, true);
+                messageHelper.setTo(to);
+                messageHelper.setFrom(from);
+            };
+
+            new Thread(() -> mailSender.send(preparator)).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendGiftNoticeMail(String to, String subject, String templateName, Account account, Account friendAccount, CertificateTemplate certificateTemplate){
+        try {
+            Map<String, Object> templateData = new HashMap<>();
+            templateData.put("first_name", friendAccount.getFirstName());
+            templateData.put("last_name", friendAccount.getLastName());
+            templateData.put("email", account.getEmail());//if we don't want to show buyer email delete this line
+            templateData.put("brand", certificateTemplate.getBrand());
+
             String templateContent = FreeMarkerTemplateUtils.processTemplateIntoString(freeMarkerConfigurer.getConfiguration().getTemplate(templateName), templateData);
             MimeMessagePreparator preparator = mimeMessage -> {
                 MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);

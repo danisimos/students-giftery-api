@@ -37,17 +37,9 @@ public class SignUpServiceImpl implements SignUpService {
                 .role(Account.Role.USER)
                 .build();
 
-        accountsRepository.save(newAccount);
+        emailUtil.sendConfirmMail(newAccount.getEmail(), "Для завершения регистрации нажмите кнопку в письме", "confirmMail.ftlh", newAccount);
 
-        Map<String, Object> templateData = new HashMap<>();
-        templateData.put("first_name", newAccount.getFirstName());
-        templateData.put("last_name", newAccount.getLastName());
-        templateData.put("confirm_code", newAccount.getConfirmCode());
-        templateData.put("email", newAccount.getEmail());
-
-        emailUtil.sendMail(newAccount.getEmail(), "Для завершения регистрации нажмите кнопку в письме", "confirmMail.ftlh", templateData);
-
-        return accountMapper.toAccountDto(newAccount);
+        return accountMapper.toAccountDto(accountsRepository.save(newAccount));
     }
 
     @Override

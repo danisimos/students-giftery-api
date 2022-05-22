@@ -14,6 +14,7 @@ import ru.itis.studentsgiftery.models.Brand;
 import ru.itis.studentsgiftery.repositories.BrandsRepository;
 import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.BrandsService;
+import ru.itis.studentsgiftery.services.SecurityService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.function.Supplier;
 public class BrandsServiceImpl implements BrandsService {
     private final BrandsRepository brandsRepository;
     private final BrandMapper brandMapper;
+    private final SecurityService securityService;
 
     @Override
     public BrandDto getBrand(Long id) {
@@ -63,7 +65,7 @@ public class BrandsServiceImpl implements BrandsService {
 
     @Override
     public BrandDto createBrand(BrandForm brandForm) {
-        Account account = ((AccountUserDetails) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getAccount();
+        Account account = securityService.getAuthorizedAccount();
         if(account.getRole().equals(Account.Role.USER)) throw new ForbiddenException("this user is not organization");
 
         Brand brand = Brand.builder()
