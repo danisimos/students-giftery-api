@@ -8,6 +8,7 @@ import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.services.AccountsService;
+import ru.itis.studentsgiftery.services.SecurityService;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -15,7 +16,6 @@ import java.util.function.Supplier;
 @Service
 @RequiredArgsConstructor
 public class AccountsServiceImpl implements AccountsService {
-
     private final AccountsRepository accountsRepository;
     private final AccountMapper accountMapper;
 
