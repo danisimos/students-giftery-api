@@ -29,4 +29,11 @@ public class CertificatesController implements CertificatesApi {
                 .status(HttpStatus.OK)
                 .body(certificatesService.buyCertificateAsGift(certificateId, accountId));
     }
+
+    @Override
+    public ResponseEntity<CertificateInstanceDto> spendCertificate(Long certificateId, Integer purchasePrice) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(certificatesService.spendCertificate(certificateId, purchasePrice));
+    }
 }

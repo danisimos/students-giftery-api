@@ -8,10 +8,7 @@ import ru.itis.studentsgiftery.dto.CertificateInstanceDto;
 import ru.itis.studentsgiftery.dto.CertificateTemplateDto;
 import ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm;
 import ru.itis.studentsgiftery.dto.mapper.CertificateMapper;
-import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
-import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
-import ru.itis.studentsgiftery.exceptions.CertificateNotFoundException;
-import ru.itis.studentsgiftery.exceptions.ForbiddenException;
+import ru.itis.studentsgiftery.exceptions.*;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.models.Brand;
 import ru.itis.studentsgiftery.models.CertificateInstance;
@@ -83,6 +80,7 @@ public class CertificatesServiceImpl implements CertificatesService {
         CertificateInstance certificateInstance = CertificateInstance.builder()
                 .state(CertificateInstance.State.NOT_ACTIVATED)
                 .code(UUID.randomUUID().toString())
+                .amount(certificateTemplate.getAmount())
                 .account(account)
                 .certificateTemplate(certificateTemplate)
                 .build();
@@ -110,6 +108,7 @@ public class CertificatesServiceImpl implements CertificatesService {
         CertificateInstance certificateInstance = CertificateInstance.builder()
                 .state(CertificateInstance.State.NOT_ACTIVATED)
                 .code(UUID.randomUUID().toString())
+                .amount(certificateTemplate.getAmount())
                 .account(friendAccount)
                 .certificateTemplate(certificateTemplate)
                 .build();
@@ -124,5 +123,22 @@ public class CertificatesServiceImpl implements CertificatesService {
                 "giftNotificationMail.ftlh", account, friendAccount, certificateTemplate);
 
         return certificateMapper.toCertificateInstanceDto(certificateInstancesRepository.save(certificateInstance));
+    }
+
+    @Override
+    public CertificateInstanceDto spendCertificate(Long certificateInstanceId, Integer purchasePrice) {
+        CertificateInstance certificateInstance = certificateInstancesRepository.findById(certificateInstanceId).orElseThrow(() -> new CertificateNotFoundException("CertificateInstance not found for this id"));
+        if (certificateInstance.getAmount().equals(purchasePrice)) {
+            certificateInstance.setAmount(0);
+            certificateInstance.setState(CertificateInstance.State.ACTIVATED);
+            certificateInstancesRepository.save(certificateInstance);
+            return certificateMapper.toCertificateInstanceDto(certificateInstance);
+        } else if (certificateInstance.getAmount() > purchasePrice) {
+            certificateInstance.setAmount(certificateInstance.getAmount() - purchasePrice);
+            certificateInstancesRepository.save(certificateInstance);
+            return certificateMapper.toCertificateInstanceDto(certificateInstance);
+        } else {
+            throw new LowBalanceException("Not enough money to make this purchase");
+        }
     }
 }
