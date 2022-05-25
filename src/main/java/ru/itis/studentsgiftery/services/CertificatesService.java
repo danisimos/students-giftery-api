@@ -11,4 +11,6 @@ public interface CertificatesService {
     CertificateInstanceDto buyCertificate(Long certificateTemplateId);
 
     CertificateInstanceDto buyCertificateAsGift(Long certificateTemplateId, Long accountId);
+
+    CertificateInstanceDto spendCertificate(Long certificateInstanceId, Integer purchasePrice);
 }

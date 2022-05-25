@@ -21,6 +21,7 @@ public class CertificateInstanceDto {
     private String code;
     private Long accountId;
     private Long certificateTemplateId;
+    private Integer amount;
 
     private State state;
 }
