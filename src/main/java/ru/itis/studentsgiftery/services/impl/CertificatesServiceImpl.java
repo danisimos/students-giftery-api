@@ -1,7 +1,6 @@
 package ru.itis.studentsgiftery.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.studentsgiftery.dto.CertificateInstanceDto;
@@ -17,14 +16,11 @@ import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.repositories.BrandsRepository;
 import ru.itis.studentsgiftery.repositories.CertificateInstancesRepository;
 import ru.itis.studentsgiftery.repositories.CertificateTemplatesRepository;
-import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.BalanceService;
 import ru.itis.studentsgiftery.services.CertificatesService;
 import ru.itis.studentsgiftery.services.SecurityService;
 import ru.itis.studentsgiftery.util.EmailUtil;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -126,10 +122,10 @@ public class CertificatesServiceImpl implements CertificatesService {
     }
 
     @Override
-    public CertificateInstanceDto spendCertificate(Long certificateInstanceId, Integer purchasePrice) {
+    public CertificateInstanceDto spendCertificate(Long certificateInstanceId, Long purchasePrice) {
         CertificateInstance certificateInstance = certificateInstancesRepository.findById(certificateInstanceId).orElseThrow(() -> new CertificateNotFoundException("CertificateInstance not found for this id"));
         if (certificateInstance.getAmount().equals(purchasePrice)) {
-            certificateInstance.setAmount(0);
+            certificateInstance.setAmount(0L);
             certificateInstance.setState(CertificateInstance.State.ACTIVATED);
             certificateInstancesRepository.save(certificateInstance);
             return certificateMapper.toCertificateInstanceDto(certificateInstance);
@@ -140,5 +136,18 @@ public class CertificatesServiceImpl implements CertificatesService {
         } else {
             throw new LowBalanceException("Not enough money to make this purchase");
         }
+    }
+
+    @Override
+    public CertificateTemplateDto deleteCertificateTemplate(Long certificateTemplateId) {
+        CertificateTemplate certificateTemplate = certificateTemplatesRepository.findById(certificateTemplateId)
+                .orElseThrow(()
+                -> new CertificateNotFoundException("Certificate not found")
+        );
+        certificateTemplate.setState(CertificateTemplate.State.DELETED);
+
+        certificateTemplatesRepository.save(certificateTemplate);
+
+        return certificateMapper.toCertificateTemplateDto(certificateTemplate);
     }
 }

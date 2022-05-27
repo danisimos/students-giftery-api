@@ -3,9 +3,7 @@ package ru.itis.studentsgiftery.dto.mapper;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.OrganizationJoinRequestDto;
-import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.models.OrganizationJoinRequest;
 
 import java.util.List;

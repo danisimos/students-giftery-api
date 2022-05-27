@@ -4,8 +4,6 @@ import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.OrganizationDto;
 import ru.itis.studentsgiftery.dto.OrganizationJoinRequestDto;
 import ru.itis.studentsgiftery.dto.forms.OrganizationForm;
-import ru.itis.studentsgiftery.models.Account;
-import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 
 import java.util.List;
 
@@ -21,4 +19,6 @@ public interface OrganizationService {
     OrganizationJoinRequestDto denyOrganizationJoinRequest(Long requestId);
 
     AccountDto unjoinFromOrganization();
+
+    OrganizationDto deleteOrganization(Long organizationId);
 }

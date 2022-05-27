@@ -3,14 +3,10 @@ package ru.itis.studentsgiftery.security.filters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
-import ru.itis.studentsgiftery.models.Account;
-import ru.itis.studentsgiftery.repositories.AccountsRepository;
-import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.security.jwt.JwtProvider;
 
 import javax.servlet.FilterChain;
@@ -19,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class TokenAuthorizationFilter extends OncePerRequestFilter {

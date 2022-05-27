@@ -39,7 +39,7 @@ public class Account {
     private String password;
 
     @Column(name = "balance")
-    private Integer balance;
+    private Long balance;
 
     @Column(name = "confirm_code")
     private String confirmCode;

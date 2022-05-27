@@ -27,7 +27,7 @@ public class CertificateTemplate {
     private Long id;
 
     @Column(name = "amount")
-    private Integer amount;
+    private Long amount;
 
     @Column(name = "description")
     private String description;

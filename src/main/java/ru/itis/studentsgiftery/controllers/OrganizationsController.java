@@ -3,15 +3,12 @@ package ru.itis.studentsgiftery.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 import ru.itis.api.OrganizationsApi;
 import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.OrganizationDto;
 import ru.itis.studentsgiftery.dto.OrganizationJoinRequestDto;
 import ru.itis.studentsgiftery.dto.forms.OrganizationForm;
-import ru.itis.studentsgiftery.models.Account;
-import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.OrganizationService;
 
 import java.util.List;
@@ -85,5 +82,10 @@ public class OrganizationsController implements OrganizationsApi {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(organizationService.unjoinFromOrganization());
+    }
+
+    @Override
+    public ResponseEntity<OrganizationDto> deleteOrganization(Long organizationId) {
+        return ResponseEntity.status(HttpStatus.OK).body(organizationService.deleteOrganization(organizationId));
     }
 }
