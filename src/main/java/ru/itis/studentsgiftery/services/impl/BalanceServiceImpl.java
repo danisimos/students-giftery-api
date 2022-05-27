@@ -23,7 +23,7 @@ public class BalanceServiceImpl implements BalanceService {
     private final AccountMapper accountMapper;
 
     @Override
-    public Integer getAccountBalance(Long accountId) {
+    public Long getAccountBalance(Long accountId) {
         Account account = accountsRepository.findById(accountId).orElseThrow((Supplier<RuntimeException>) ()
                 -> new AccountNotFoundException("Account not found")
         );

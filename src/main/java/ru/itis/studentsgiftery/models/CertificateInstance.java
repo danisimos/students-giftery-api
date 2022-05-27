@@ -25,7 +25,7 @@ public class CertificateInstance {
     private String code;
 
     @Column(name = "amount")
-    private Integer amount;
+    private Long amount;
 
     @ManyToOne
     @JoinColumn(name = "account")

@@ -12,7 +12,7 @@ import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.services.SignUpService;
 import ru.itis.studentsgiftery.util.EmailUtil;
 
-import java.util.*;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 @Service
@@ -31,7 +31,7 @@ public class SignUpServiceImpl implements SignUpService {
                 .lastName(signUpForm.getLastName())
                 .email(signUpForm.getEmail())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
-                .balance(0)
+                .balance(0L)
                 .confirmCode(UUID.randomUUID().toString())
                 .state(Account.State.NOT_CONFIRMED)
                 .role(Account.Role.USER)

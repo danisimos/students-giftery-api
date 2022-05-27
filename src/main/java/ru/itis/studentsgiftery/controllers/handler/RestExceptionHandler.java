@@ -7,7 +7,10 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.itis.studentsgiftery.exceptions.*;
+import ru.itis.studentsgiftery.exceptions.ExceptionEntity;
+import ru.itis.studentsgiftery.exceptions.ForbiddenException;
+import ru.itis.studentsgiftery.exceptions.LowBalanceException;
+import ru.itis.studentsgiftery.exceptions.StudentsNotFoundException;
 import ru.itis.studentsgiftery.validation.http.ValidationErrorDto;
 import ru.itis.studentsgiftery.validation.http.ValidationExceptionResponse;
 

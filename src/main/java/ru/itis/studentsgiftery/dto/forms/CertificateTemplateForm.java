@@ -12,7 +12,7 @@ public class CertificateTemplateForm {
         PRODUCT, DISCOUNT, BONUS
     }
 
-    private Integer amount;
+    private Long amount;
     private String description;
     private Type type;
 }

@@ -14,6 +14,10 @@ import java.util.List;
 @Builder
 @Entity
 public class Organization {
+    public enum State {
+        ACTIVE, DELETED
+    };
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,4 +36,7 @@ public class Organization {
 
     @OneToMany(mappedBy = "organization")
     private List<OrganizationJoinRequest> joinRequests;
+
+    @Enumerated(value = EnumType.STRING)
+    private State state;
 }

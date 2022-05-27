@@ -3,7 +3,6 @@ package ru.itis.studentsgiftery.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.itis.studentsgiftery.validation.annotations.NotSameNames;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;

@@ -1,7 +1,6 @@
 package ru.itis.studentsgiftery.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.OrganizationDto;
@@ -10,7 +9,6 @@ import ru.itis.studentsgiftery.dto.forms.OrganizationForm;
 import ru.itis.studentsgiftery.dto.mapper.AccountMapper;
 import ru.itis.studentsgiftery.dto.mapper.OrganizationJoinRequestMapper;
 import ru.itis.studentsgiftery.dto.mapper.OrganizationMapper;
-import ru.itis.studentsgiftery.exceptions.BrandNotFoundException;
 import ru.itis.studentsgiftery.exceptions.ForbiddenException;
 import ru.itis.studentsgiftery.exceptions.OrganizationNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
@@ -19,7 +17,6 @@ import ru.itis.studentsgiftery.models.OrganizationJoinRequest;
 import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.repositories.OrganizationJoinRequestRepository;
 import ru.itis.studentsgiftery.repositories.OrganizationsRepository;
-import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.OrganizationService;
 import ru.itis.studentsgiftery.services.SecurityService;
 
@@ -47,6 +44,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 .name(organizationForm.getName())
                 .description(organizationForm.getDescription())
                 .accounts(Collections.singletonList(account))
+                .state(Organization.State.ACTIVE)
                 .build();
 
         OrganizationDto organizationDto = organizationMapper.toOrganizationDto(organizationsRepository.save(organization));
@@ -152,5 +150,15 @@ public class OrganizationServiceImpl implements OrganizationService {
         account.setRole(Account.Role.USER);
 
         return accountMapper.toAccountDto(accountsRepository.save(account));
+    }
+
+    @Override
+    public OrganizationDto deleteOrganization(Long organizationId) {
+        Organization organization = organizationsRepository.findById(organizationId)
+                .orElseThrow(() -> new OrganizationNotFoundException("Organization not found"));
+
+        organization.setState(Organization.State.DELETED);
+
+        return organizationMapper.toOrganizationDto(organizationsRepository.save(organization));
     }
 }
