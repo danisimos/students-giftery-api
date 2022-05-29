@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.itis.api.BrandsApi;
 import ru.itis.studentsgiftery.dto.BrandDto;
 import ru.itis.studentsgiftery.dto.forms.BrandForm;
+import ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm;
 import ru.itis.studentsgiftery.services.BrandsService;
 import ru.itis.studentsgiftery.services.CertificatesService;
 

@@ -3,7 +3,7 @@ package ru.itis.studentsgiftery.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.itis.api.OrganizationsApi;
 import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.OrganizationDto;
