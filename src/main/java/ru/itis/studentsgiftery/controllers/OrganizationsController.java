@@ -83,4 +83,9 @@ public class OrganizationsController implements OrganizationsApi {
                 .status(HttpStatus.OK)
                 .body(organizationService.unjoinFromOrganization());
     }
+
+    @Override
+    public ResponseEntity<OrganizationDto> deleteOrganization(Long organizationId) {
+        return ResponseEntity.status(HttpStatus.OK).body(organizationService.deleteOrganization(organizationId));
+    }
 }

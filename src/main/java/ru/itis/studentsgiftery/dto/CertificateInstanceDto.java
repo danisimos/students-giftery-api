@@ -3,11 +3,6 @@ package ru.itis.studentsgiftery.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.itis.studentsgiftery.models.Account;
-import ru.itis.studentsgiftery.models.CertificateInstance;
-import ru.itis.studentsgiftery.models.CertificateTemplate;
-
-import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +16,7 @@ public class CertificateInstanceDto {
     private String code;
     private Long accountId;
     private Long certificateTemplateId;
+    private Integer amount;
 
     private State state;
 }

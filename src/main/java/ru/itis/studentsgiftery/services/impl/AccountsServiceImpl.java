@@ -15,7 +15,6 @@ import java.util.function.Supplier;
 @Service
 @RequiredArgsConstructor
 public class AccountsServiceImpl implements AccountsService {
-
     private final AccountsRepository accountsRepository;
     private final AccountMapper accountMapper;
 

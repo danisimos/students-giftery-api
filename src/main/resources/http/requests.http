@@ -92,8 +92,8 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0LnRlc
 
 ###
 
-POST http://localhost:8080/api/students-giftery/brands
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5paWwua29yb3RhZXZAZ21haWwuY29tIiwiZXhwIjoxNjUxMDYzMDA0fQ.5z2NY2aQJT1RvX06MA_X1QCQ5Z6X5Htb15p7kyD6dl0
+POST http://localhost:8080/api/students-giftery/brands/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0LnRlc3RAZ21haWwuY29tIiwiZXhwIjoxNjUyNDI5MzIzfQ.gOGwT_psvZVFuOodqJ1_UKi9YQghK5JQ3ufw6IpXpWM
 Content-Type: application/json
 
 {

@@ -12,7 +12,7 @@ import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.services.SignUpService;
 import ru.itis.studentsgiftery.util.EmailUtil;
 
-import java.util.*;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 @Service
@@ -31,23 +31,15 @@ public class SignUpServiceImpl implements SignUpService {
                 .lastName(signUpForm.getLastName())
                 .email(signUpForm.getEmail())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
-                .balance(0)
+                .balance(0L)
                 .confirmCode(UUID.randomUUID().toString())
                 .state(Account.State.NOT_CONFIRMED)
                 .role(Account.Role.USER)
                 .build();
 
-        accountsRepository.save(newAccount);
+        emailUtil.sendConfirmMail(newAccount.getEmail(), "Для завершения регистрации нажмите кнопку в письме", "confirmMail.ftlh", newAccount);
 
-        Map<String, Object> templateData = new HashMap<>();
-        templateData.put("first_name", newAccount.getFirstName());
-        templateData.put("last_name", newAccount.getLastName());
-        templateData.put("confirm_code", newAccount.getConfirmCode());
-        templateData.put("email", newAccount.getEmail());
-
-        emailUtil.sendMail(newAccount.getEmail(), "Для завершения регистрации нажмите кнопку в письме", "confirmMail.ftlh", templateData);
-
-        return accountMapper.toAccountDto(newAccount);
+        return accountMapper.toAccountDto(accountsRepository.save(newAccount));
     }
 
     @Override
