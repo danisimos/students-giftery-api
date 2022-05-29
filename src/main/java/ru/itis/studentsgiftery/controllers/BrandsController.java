@@ -3,16 +3,12 @@ package ru.itis.studentsgiftery.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.api.BrandsApi;
 import ru.itis.studentsgiftery.dto.BrandDto;
 import ru.itis.studentsgiftery.dto.CertificateTemplateDto;
 import ru.itis.studentsgiftery.dto.forms.BrandForm;
 import ru.itis.studentsgiftery.dto.forms.CertificateTemplateForm;
-import ru.itis.studentsgiftery.models.Account;
-import ru.itis.studentsgiftery.security.details.AccountUserDetails;
 import ru.itis.studentsgiftery.services.BrandsService;
 import ru.itis.studentsgiftery.services.CertificatesService;
 
