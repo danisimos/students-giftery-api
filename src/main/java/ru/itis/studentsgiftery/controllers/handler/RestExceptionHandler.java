@@ -7,10 +7,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.itis.studentsgiftery.exceptions.ExceptionEntity;
-import ru.itis.studentsgiftery.exceptions.ForbiddenException;
-import ru.itis.studentsgiftery.exceptions.LowBalanceException;
-import ru.itis.studentsgiftery.exceptions.StudentsNotFoundException;
+import ru.itis.studentsgiftery.exceptions.*;
 import ru.itis.studentsgiftery.validation.http.ValidationErrorDto;
 import ru.itis.studentsgiftery.validation.http.ValidationExceptionResponse;
 
@@ -46,7 +43,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ExceptionEntity> StudentsNotFoundExceptionHandler(StudentsNotFoundException exception){
+    public ResponseEntity<ExceptionEntity> NotFoundExceptionHandler(NotFoundException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ExceptionEntity.builder().message(exception.getMessage()).build());
     }
 
@@ -57,6 +54,11 @@ public class RestExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ExceptionEntity> ForbiddenExceptionHandler(ForbiddenException exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ExceptionEntity.builder().message(exception.getMessage()).build());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionEntity> AccountAlreadyExistsExceptionHandler(AccountAlreadyExistsException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ExceptionEntity.builder().message(exception.getMessage()).build());
     }
 }
