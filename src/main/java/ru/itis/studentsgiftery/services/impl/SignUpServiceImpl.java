@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import ru.itis.studentsgiftery.dto.AccountDto;
 import ru.itis.studentsgiftery.dto.forms.SignUpForm;
 import ru.itis.studentsgiftery.dto.mapper.AccountMapper;
+import ru.itis.studentsgiftery.exceptions.AccountAlreadyExistsException;
 import ru.itis.studentsgiftery.exceptions.AccountNotFoundException;
 import ru.itis.studentsgiftery.models.Account;
 import ru.itis.studentsgiftery.repositories.AccountsRepository;
 import ru.itis.studentsgiftery.services.SignUpService;
 import ru.itis.studentsgiftery.util.EmailUtil;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -26,20 +28,25 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public AccountDto signUp(SignUpForm signUpForm) {
-        Account newAccount = Account.builder()
-                .firstName(signUpForm.getFirstName())
-                .lastName(signUpForm.getLastName())
-                .email(signUpForm.getEmail())
-                .password(passwordEncoder.encode(signUpForm.getPassword()))
-                .balance(0L)
-                .confirmCode(UUID.randomUUID().toString())
-                .state(Account.State.NOT_CONFIRMED)
-                .role(Account.Role.USER)
-                .build();
+        Optional<Account> account = accountsRepository.findAccountByEmail(signUpForm.getEmail());
+        if(account.isPresent()) {
+            throw new AccountAlreadyExistsException("Cannot register new account because account with this email is already registered");
+        } else {
+            Account newAccount = Account.builder()
+                    .firstName(signUpForm.getFirstName())
+                    .lastName(signUpForm.getLastName())
+                    .email(signUpForm.getEmail())
+                    .password(passwordEncoder.encode(signUpForm.getPassword()))
+                    .balance(0L)
+                    .confirmCode(UUID.randomUUID().toString())
+                    .state(Account.State.NOT_CONFIRMED)
+                    .role(Account.Role.USER)
+                    .build();
 
-        emailUtil.sendConfirmMail(newAccount.getEmail(), "Для завершения регистрации нажмите кнопку в письме", "confirmMail.ftlh", newAccount);
+            emailUtil.sendConfirmMail(newAccount.getEmail(), "Для завершения регистрации нажмите кнопку в письме", "confirmMail.ftlh", newAccount);
 
-        return accountMapper.toAccountDto(accountsRepository.save(newAccount));
+            return accountMapper.toAccountDto(accountsRepository.save(newAccount));
+        }
     }
 
     @Override
