@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Подтверждение регистрации</title>
+    <title>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</title>
     <style>
         .btn {
             display: inline-block;
@@ -21,7 +21,7 @@
 <h1>Hello, dear ${first_name} ${last_name}</h1>
 <p>You've created an account with ${email}</p>
 <p>To end the registration process, please click the button below</p>
-<a class="btn" href="http://localhost/confirm/${confirm_code}">Confirm your email</a>
+<a class="btn" href="http://localhost:8080/api/students-giftery/confirm/${confirm_code}">Confirm your email</a>
 <p>A warm welcome,</p>
 <p>STUDENTS GIFTERY</p>
 </body>

@@ -1,5 +1,6 @@
 package ru.itis.studentsgiftery.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class Account {
     }
 
     public enum Role {
-        USER, ORGANIZATION
+        USER, ORGANIZATION, ADMIN
     }
 
     @Id
@@ -45,9 +46,11 @@ public class Account {
     private String confirmCode;
 
     @OneToMany(mappedBy = "account")
+    @JsonManagedReference
     private List<CertificateInstance> certificateInstances;
 
     @OneToMany(mappedBy = "organization")
+    @JsonManagedReference
     private List<OrganizationJoinRequest> joinRequests;
 
     @ManyToOne

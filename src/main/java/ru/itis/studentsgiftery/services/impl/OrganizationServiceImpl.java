@@ -69,8 +69,10 @@ public class OrganizationServiceImpl implements OrganizationService {
                 -> new OrganizationNotFoundException("Organization not found")
         );
 
-        if(account.getRole().equals(Account.Role.ORGANIZATION)
-                || account.getOrganization().getId().equals(organizationId)) throw new ForbiddenException("this user already organization");
+        if(account.getRole().equals(Account.Role.ORGANIZATION)) throw new ForbiddenException("this user already organization");
+        if(account.getOrganization() != null) throw new ForbiddenException("this user already organization");
+
+
 
         OrganizationJoinRequest joinRequest = OrganizationJoinRequest.builder()
                 .organization(organization)

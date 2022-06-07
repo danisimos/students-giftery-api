@@ -1,9 +1,7 @@
 package ru.itis.studentsgiftery.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString(exclude = {"brand"})
 public class CertificateTemplate {
     public enum State {
         ACTIVE, DELETED
@@ -33,10 +32,11 @@ public class CertificateTemplate {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "brand_id")
+    @JoinColumn(name = "brand")
     private Brand brand;
 
     @OneToMany(mappedBy = "certificateTemplate")
+    @JsonManagedReference
     private List<CertificateInstance> certificateInstances;
 
     @Enumerated(value = EnumType.STRING)

@@ -81,12 +81,6 @@ public class CertificatesServiceImpl implements CertificatesService {
                 .certificateTemplate(certificateTemplate)
                 .build();
 
-        account.getCertificateInstances().add(certificateInstance);
-        certificateTemplate.getCertificateInstances().add(certificateInstance);
-
-        accountsRepository.save(account);
-        certificateTemplatesRepository.save(certificateTemplate);
-
         return certificateMapper.toCertificateInstanceDto(certificateInstancesRepository.save(certificateInstance));
     }
 
@@ -101,6 +95,7 @@ public class CertificatesServiceImpl implements CertificatesService {
         CertificateTemplate certificateTemplate = certificateTemplatesRepository.findById(certificateTemplateId)
                 .orElseThrow(() -> new CertificateNotFoundException("no such certificate"));
 
+
         CertificateInstance certificateInstance = CertificateInstance.builder()
                 .state(CertificateInstance.State.NOT_ACTIVATED)
                 .code(UUID.randomUUID().toString())
@@ -109,14 +104,10 @@ public class CertificatesServiceImpl implements CertificatesService {
                 .certificateTemplate(certificateTemplate)
                 .build();
 
-        friendAccount.getCertificateInstances().add(certificateInstance);
-        certificateTemplate.getCertificateInstances().add(certificateInstance);
-
-        accountsRepository.save(friendAccount);
-        certificateTemplatesRepository.save(certificateTemplate);
 
         emailUtil.sendGiftNoticeMail(friendAccount.getEmail(), "Someone just gave you a certificate",
-                "giftNotificationMail.ftlh", account, friendAccount, certificateTemplate);
+                "giftNotificationMail.ftlh", account.getEmail(), friendAccount.getFirstName(),
+                friendAccount.getLastName(), certificateTemplate.getBrand().getBrandName());
 
         return certificateMapper.toCertificateInstanceDto(certificateInstancesRepository.save(certificateInstance));
     }

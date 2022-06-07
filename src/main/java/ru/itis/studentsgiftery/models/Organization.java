@@ -1,5 +1,6 @@
 package ru.itis.studentsgiftery.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,12 +30,15 @@ public class Organization {
     private String description;
 
     @OneToMany(mappedBy = "organization")
+    @JsonManagedReference
     private List<Brand> brands;
 
     @OneToMany(mappedBy = "organization")
+    @JsonManagedReference
     private List<Account> accounts;
 
     @OneToMany(mappedBy = "organization")
+    @JsonManagedReference
     private List<OrganizationJoinRequest> joinRequests;
 
     @Enumerated(value = EnumType.STRING)

@@ -51,8 +51,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(tokenAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .antMatchers("/api/students-giftery/signUp/").permitAll()
+                .antMatchers("/api/students-giftery/signUp").permitAll()
+                .antMatchers("/api/students-giftery/confirm/**").permitAll()
                 .antMatchers("/api/students-giftery/signIn/").permitAll()
+                .antMatchers("/api/students-giftery/accounts").hasAuthority("ADMIN")
+                .antMatchers("/api/students-giftery/accounts/**").hasAnyAuthority("ADMIN", "ORGANIZATION")
                 .antMatchers("/api/students-giftery/**").authenticated();
     }
 }

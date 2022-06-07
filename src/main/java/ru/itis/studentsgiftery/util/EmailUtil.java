@@ -49,13 +49,13 @@ public class EmailUtil {
         }
     }
 
-    public void sendGiftNoticeMail(String to, String subject, String templateName, Account account, Account friendAccount, CertificateTemplate certificateTemplate){
+    public void sendGiftNoticeMail(String to, String subject, String templateName, String email, String firstName, String lastName, String brand){
         try {
             Map<String, Object> templateData = new HashMap<>();
-            templateData.put("first_name", friendAccount.getFirstName());
-            templateData.put("last_name", friendAccount.getLastName());
-            templateData.put("email", account.getEmail());//if we don't want to show buyer email delete this line
-            templateData.put("brand", certificateTemplate.getBrand());
+            templateData.put("first_name", firstName);
+            templateData.put("last_name", lastName);
+            templateData.put("email", email);
+            templateData.put("brand", brand);
 
             String templateContent = FreeMarkerTemplateUtils.processTemplateIntoString(freeMarkerConfigurer.getConfiguration().getTemplate(templateName), templateData);
             MimeMessagePreparator preparator = mimeMessage -> {

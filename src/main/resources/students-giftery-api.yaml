@@ -284,6 +284,8 @@ paths:
       security: []
       tags:
         - SignUp
+      description: new
+      s
       requestBody:
         content:
           application/json:
